@@ -1,1 +1,1 @@
-$ENV{'TEXINPUTS'}='./inputs//:' . $ENV{'TEXINPUTS'};
+$ENV{'TEXINPUTS'}='./lib//:' . $ENV{'TEXINPUTS'};
