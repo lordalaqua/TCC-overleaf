@@ -43,7 +43,7 @@
 %
 % Informações gerais
 %
-\title{Estimativa de profundidade em imagens omnidirecionais}
+\title{Estimativa de profundidade a partir de uma única imagem omnidirecional}
 
 \author{Dal'Aqua}{Lorenzo Pezzi}
 
@@ -131,7 +131,7 @@
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
-\begin{englishabstract}{Title in English}{Keywords, in, English}
+\begin{englishabstract}{Depth estimation on a single omnidirectional image}{Keywords, in, English}
     Abstract in english
 \end{englishabstract}
 
@@ -162,18 +162,36 @@
 % introducao
 \chapter{Introdução}
 
-Este trabalho introduz um método para a estimativa de profundidade a partir de uma única imagem omnidirecional.Imagens omnidirecionais podem ser construídas fazendo uma colagem de várias imagens perspectivas da mesma cena ou capturadas com câmeras específicas para este fim. Também chamadas de imagens esféricas, ou panoramas 360\degree, estas imagens tem ângulo de visão de 360\degree no eixo horizontal e 180\degree no eixo vertical.
+Este trabalho introduz um método para a estimativa de profundidade a partir de uma única imagem omnidirecional. Imagens omnidirecionais tem ângulo de visão de 360\degree no eixo horizontal e 180\degree no eixo vertical, e podem ser construídas fazendo uma colagem de várias imagens perspectivas da mesma cena ou capturadas com câmeras específicas para este fim. Também são chamadas de imagens esféricas, imagens 360\degree, ou panoramas 360\degree.
 
-A estimativa de profundidade tem múltiplas aplicações em robótica, etc... TODO: aplicações
+A estimativa de profundidade tem múltiplas aplicações em robótica, como navegação e reconhecimento de objetos, além de ser um componente crucial para a reconstrução 3D de objetos a partir de imagens. No caso de imagens esféricas, a reconstrução 3D de uma imagen 360\degree tem aplicações diretas em realidade virtual e realidade aumentada.
 
-O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a informação de disparidade é calculada partir da correspondência entre pixels de um par de imagens obtidas de câmeras cujos parâmetros são conhecidos. Recentemente, a aplicação de redes neurais convolucionais possibilitou
+O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a informação de disparidade é calculada partir da correspondência entre pixels de um par de imagens obtidas de câmeras cujos parâmetros são conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas.
 
 % Notas:
 % -  Introduzir imagens esféricas, suas utilizações (refs?), profundidade como passo para reconstrução 3D e usos (arquitetura, VR, AR)...
 
 % -
 
+%
+\chapter{Estado da arte}
+\chapter{Nosso método}
+\chapter{Resultados}
+\chapter{Conclusão}
 
+% referências
+% aqui será usado o environment padrao `thebibliography'; porém, sugere-se
+% seriamente o uso de BibTeX e do estilo abnt.bst (veja na página do
+% UTUG)
+%
+% observe também o estilo meio estranho de alguns labels; isso é
+% devido ao uso do pacote `natbib', que permite fazer citações de
+% autores, ano, e diversas combinações desses
+
+\bibliographystyle{abntex2-alf}
+\bibliography{biblio}
+
+\end{document}
 
 % \section{Exemplos - Figuras e tabelas}
 
@@ -303,22 +321,3 @@ O método clássico para estimativa de profundidade é o \textit{stereo matching
 
 
 % e aqui vai a parte principal
-%
-\chapter{Estado da arte}
-\chapter{Nosso método}
-\chapter{Resultados}
-\chapter{Conclusão}
-
-% referências
-% aqui será usado o environment padrao `thebibliography'; porém, sugere-se
-% seriamente o uso de BibTeX e do estilo abnt.bst (veja na página do
-% UTUG)
-%
-% observe também o estilo meio estranho de alguns labels; isso é
-% devido ao uso do pacote `natbib', que permite fazer citações de
-% autores, ano, e diversas combinações desses
-
-\bibliographystyle{abntex2-alf}
-\bibliography{biblio}
-
-\end{document}
