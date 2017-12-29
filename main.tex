@@ -6,6 +6,7 @@
 % public domain.
 %
 \documentclass[cic,tc]{iiufrgs}
+\usepackage{gensymb}
 % Para usar o modelo, deve-se informar o programa e o tipo de documento.
 % Programas :
 % * cic       -- Graduação em Ciência da Computação
@@ -161,7 +162,12 @@
 % introducao
 \chapter{Introdução}
 
-Este trabalho introduz um método para a estimativa de profundidade em imagens 360\de
+Este trabalho introduz um método para a estimativa de profundidade a partir de uma única imagem omnidirecional.Imagens omnidirecionais podem ser construídas fazendo uma colagem de várias imagens perspectivas da mesma cena ou capturadas com câmeras específicas para este fim. Também chamadas de imagens esféricas, ou panoramas 360\degree, estas imagens tem ângulo de visão de 360\degree no eixo horizontal e 180\degree no eixo vertical.
+
+A estimativa de profundidade tem múltiplas aplicações em robótica, etc... TODO: aplicações
+
+O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a informação de disparidade é calculada
+
 % Notas:
 % -  Introduzir imagens esféricas, suas utilizações (refs?), profundidade como passo para reconstrução 3D e usos (arquitetura, VR, AR)...
 
