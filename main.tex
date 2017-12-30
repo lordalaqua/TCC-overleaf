@@ -168,29 +168,17 @@ A estimativa de profundidade tem múltiplas aplicações em robótica, como nave
 
 O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a informação de disparidade é calculada partir da correspondência entre pixels de um par de imagens obtidas de câmeras cujos parâmetros são conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas.
 
-% Notas:
-% -  Introduzir imagens esféricas, suas utilizações (refs?), profundidade como passo para reconstrução 3D e usos (arquitetura, VR, AR)...
+O método proposto neste trabalho pretende estender as técnicas de estimação de profundidade a partir de uma única imagem perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si. Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
-% -
-
-%
-\chapter{Estado da arte}
-
-Stereo matching pode ser usado para imagens omnidirecionais, já usam em colagens (citar
-
-\begin{itemize}
-    \item \emph{cite}: Unicórnios são verdes \cite{Li2001};
-     \item \emph{citep}:Unicórnios são verdes \citep{Li2001};
-     \item \emph{citet}: Segundo \citet{Li2001}, unicórnios são
-     verdes.
-     \item \emph{citen or citenum}: Segundo \citen{Li2001},
-     unicórnios são verdes.
-     \item \emph{citeauthor e citeyearpar}: Segundo artigos de
-     \citeauthor{Li2001} , unicórnios são verdes
-     \citeyearpar{Li2001}.
-\end{itemize}
+% Comentar sobre resultados aqui...
 
 
+\chapter{Trabalhos anteriores}
+
+\section{Stereo matching em imagens omnidirecionais}
+Stereo matching pode ser usado para imagens omnidirecionais, já usam em colagens (citar \citep{Li2001})
+
+\section{Estimativa de profundidade a partir de uma única imagem}
 Técnicas de estimativa de profundidade a partir de uma única imagem já eram pesquisadas desde os anos 90 (citar), mas a partir do uso de redes neurais que os resultados ficaram interessantes
 
 \chapter{Nosso método}
