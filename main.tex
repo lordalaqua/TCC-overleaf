@@ -217,8 +217,8 @@ Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref
           \textit{Imagem} & \textit{ground truth} & \textit{sections} & \textit{M. sections} &  \textit{sphere}  &   \textit{M. sphere} \\
           \hline
           \hline
-          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\ 
-          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\ 
+          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\
+          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\
           \hline
         \end{tabular}
     \legend{Fonte: O Autor}
@@ -228,59 +228,62 @@ Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref
 
 \chapter{Conclusão}
 
-Esta seção faz referência às Figuras~\ref{fig:estrutura},~\ref{fig:ex1} e~\ref{fig:ex2}, a título de exemplo. A primeira figura apresenta a estrutura de uma figura. A \emph{descrição} deve aparecer \textbf{acima} da figura. Abaixo da figura, deve ser indicado a origem da imagem, mesmo se essa for apenas os autores do texto.
-
-\begin{figure}[h]
-    \caption{Descrição da Figura deve ir no topo}
-    \begin{center}
-        % Aqui vai um includegraphics , um picture environment ou qualquer
-        % outro comando necessário para incorporar o formato de imagem
-        % utilizado.
-        \begin{picture}(100,100)
-            \put(0,0){\line(0,1){100}}
-            \put(0,0){\line(1,0){100}}
-            \put(100,100){\line(0,-1){100}}
-            \put(100,100){\line(-1,0){100}}
-            \put(10,50){Uma Imagem}
-        \end{picture}
-    \end{center}
-    \label{fig:estrutura}
-    \legend{Fonte: Os Autores}
-\end{figure}
-
-\begin{figure}
-    \caption{Exemplo de figura importada de um arquivo e também exemplo de caption muito grande que ocupa mais de uma linha na Lista~de~Figuras}
-    \begin{center}
-        \includegraphics[width=10em]{fig}
-    \end{center}
-    \legend{Fonte: Os Autores}
-    \label{fig:ex1}
-\end{figure}
-
-% o `[h]' abaixo é um parâmetro opcional que sugere que o LaTeX coloque a
-% figura exatamente neste ponto do texto. Somente preocupe-se com esse tipo
-% de formatação quando o texto estiver completamente pronto (uma frase a mais
-% pode fazer o LaTeX mudar completamente de idéia sobre onde colocar as
-% figuras e tabelas)
-% \begin{figure}[h]
-\begin{figure}
-    \caption{Exemplo de figura desenhada com o environment \texttt{picture}.}
-    \begin{center}
-        \setlength{\unitlength}{.1em}
-        \begin{picture}(100,100)
-            \put(20,20){\circle{20}}
-            \put(20,20){\small\makebox(0,0){a}}
-            \put(80,80){\circle{20}}
-            \put(80,80){\small\makebox(0,0){b}}
-            \put(28,28){\vector(1,1){44}}
-        \end{picture}
-    \end{center}
-    \legend{Fonte: Os Autores}
-    \label{fig:ex2}
-\end{figure}
-
 
 \bibliographystyle{abntex2-alf}
 \bibliography{biblio}
 
 \end{document}
+
+
+% Exxeplos de uso de figuras
+
+Esta seção faz referência às Figuras~\ref{fig:estrutura},~\ref{fig:ex1} e~\ref{fig:ex2}, a título de exemplo. A primeira figura apresenta a estrutura de uma figura. A \emph{descrição} deve aparecer \textbf{acima} da figura. Abaixo da figura, deve ser indicado a origem da imagem, mesmo se essa for apenas os autores do texto.
+
+% \begin{figure}[h]
+%     \caption{Descrição da Figura deve ir no topo}
+%     \begin{center}
+%         % Aqui vai um includegraphics , um picture environment ou qualquer
+%         % outro comando necessário para incorporar o formato de imagem
+%         % utilizado.
+%         \begin{picture}(100,100)
+%             \put(0,0){\line(0,1){100}}
+%             \put(0,0){\line(1,0){100}}
+%             \put(100,100){\line(0,-1){100}}
+%             \put(100,100){\line(-1,0){100}}
+%             \put(10,50){Uma Imagem}
+%         \end{picture}
+%     \end{center}
+%     \label{fig:estrutura}
+%     \legend{Fonte: Os Autores}
+% \end{figure}
+
+% \begin{figure}
+%     \caption{Exemplo de figura importada de um arquivo e também exemplo de caption muito grande que ocupa mais de uma linha na Lista~de~Figuras}
+%     \begin{center}
+%         \includegraphics[width=10em]{fig}
+%     \end{center}
+%     \legend{Fonte: Os Autores}
+%     \label{fig:ex1}
+% \end{figure}
+
+% % o `[h]' abaixo é um parâmetro opcional que sugere que o LaTeX coloque a
+% % figura exatamente neste ponto do texto. Somente preocupe-se com esse tipo
+% % de formatação quando o texto estiver completamente pronto (uma frase a mais
+% % pode fazer o LaTeX mudar completamente de idéia sobre onde colocar as
+% % figuras e tabelas)
+% % \begin{figure}[h]
+% \begin{figure}
+%     \caption{Exemplo de figura desenhada com o environment \texttt{picture}.}
+%     \begin{center}
+%         \setlength{\unitlength}{.1em}
+%         \begin{picture}(100,100)
+%             \put(20,20){\circle{20}}
+%             \put(20,20){\small\makebox(0,0){a}}
+%             \put(80,80){\circle{20}}
+%             \put(80,80){\small\makebox(0,0){b}}
+%             \put(28,28){\vector(1,1){44}}
+%         \end{picture}
+%     \end{center}
+%     \legend{Fonte: Os Autores}
+%     \label{fig:ex2}
+% \end{figure}
