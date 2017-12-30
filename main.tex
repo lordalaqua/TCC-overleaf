@@ -211,30 +211,24 @@ Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref
 
 \begin{table}[h]
     \caption{Tabela com métricas dos resultados}
-    % OBS: não use \begin{center}, pois este aumenta o espaçamento entre a caption/legend e a tabela
-    % Para figuras, a aparência é melhor com o espaçamento extra
     \centering
         \begin{tabular}{c|c|c|c|c|c}
           \hline
-          \textit{Imagem} & \textit{GT} & \textit{A} & \textit{M. A} &  \textit{B}  &   \textit{M. B} \\
+          \textit{Imagem} & \textit{ground truth} & \textit{sections} & \textit{M. sections} &  \textit{sphere}  &   \textit{M. sphere} \\
           \hline
           \hline
-          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  &  0,2  &  0,2 \\ 
-          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  &  0,2  &  0,2 \\ 
+          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\ 
+          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\ 
           \hline
         \end{tabular}
-    \legend{Fonte: Os Autores}
-    \label{tbl:ex1}
+    \legend{Fonte: O Autor}
+    \label{tbl:results1}
 \end{table}
 
 
 \chapter{Conclusão}
 
-\section{Exemplos - Figuras e tabelas}
-
 Esta seção faz referência às Figuras~\ref{fig:estrutura},~\ref{fig:ex1} e~\ref{fig:ex2}, a título de exemplo. A primeira figura apresenta a estrutura de uma figura. A \emph{descrição} deve aparecer \textbf{acima} da figura. Abaixo da figura, deve ser indicado a origem da imagem, mesmo se essa for apenas os autores do texto.
-
-A Figura~\ref{fig:ex1} representa o caso mais comum, onde a figura propriamente dita é importada de um arquivo ( neste exemplo o formato é \texttt{eps} ou \texttt{pdf}. Veja a seção \ref{sec:fig_format}). A Figura~\ref{fig:ex2} exemplifica o uso do environment \texttt{picture}, para desenhar usando o próprio~\LaTeX.
 
 \begin{figure}[h]
     \caption{Descrição da Figura deve ir no topo}
@@ -257,7 +251,7 @@ A Figura~\ref{fig:ex1} representa o caso mais comum, onde a figura propriamente 
 \begin{figure}
     \caption{Exemplo de figura importada de um arquivo e também exemplo de caption muito grande que ocupa mais de uma linha na Lista~de~Figuras}
     \begin{center}
-        \includegraphics[width=8em]{fig}
+        \includegraphics[width=10em]{fig}
     \end{center}
     \legend{Fonte: Os Autores}
     \label{fig:ex1}
