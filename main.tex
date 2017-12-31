@@ -282,7 +282,9 @@ Inicialmente, a imagem esférica na projeção equiretangular é dividida em vá
 
 TODO: explicar porque não usamos os polos
 
-Esfera seccionada em N planos, com overlap porque precisamos de informação redundante para gerar a coerência global.
+Esfera seccionada em N planos, com overlap porque precisamos de informação redundante para gerar a coerência global. Cada plano com FOV de 90\degree, e 45\degree de diferença entre as seções, logo há 45\degree de overlap.
+
+A projeção é calculada utilizando a distância focal conhecida 2 H (Figura \ref{fig:pipeline}) 
 
 \section{Estimativa de profundidade}
 
