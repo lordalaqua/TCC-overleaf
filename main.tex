@@ -220,7 +220,7 @@ As áreas de visão computacional e processamento de imagens, comumente trabalha
     \legend{Fonte: https://tex.stackexchange.com/q/96074/}
 \end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em W pixels e os 180\degree de campo de visão vertical em H pixels.
+Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.
 
 \begin{figure}
     \caption{Imagem omnidirecional em projeção equiretangular}
@@ -284,24 +284,54 @@ TODO: explicar porque não usamos os polos
 
 Esfera seccionada em N planos, com overlap porque precisamos de informação redundante para gerar a coerência global. Cada plano com FOV de 90\degree, e 45\degree de diferença entre as seções, logo há 45\degree de overlap.
 
-A projeção é calculada utilizando a distância focal conhecida 2 H (Figura \ref{fig:pipeline}) 
+A projeção é calculada utilizando a distância focal conhecida $2\pi W$ (Figura \ref{fig:sphericalIm}) 
+
+Pega tamanho de imagem destino e ângulos de projeção phi, theta
+
+calcula para cada pixel os ângulos phii thetai do pixel
+
+divide os ângulos pela distancia focal 2piw ou pi*H para encontrar os pixels da imagem esférica que correspondem.
+
+interpola a imagem esférica porque os pixels não são inteiros.
+
+
 
 \section{Estimativa de profundidade}
 
+O método é independente da técnica de estimativa de profundidade utilizada, só é necessário que seja uma técnica de estimativa a partir de uma única imagem. Os resultados com redes neurais são impressionantes, escolhemos a rede do Fayao por ter código disponível. Utilizamos as redes como um \textit{blackbox}.
+
 \section{Projetando a seção de volta para a esfera}
+
+Pega todos os ângulos que tem na imagem planar (precisa do FOV)
+
+Converte os ângulos pros index dos pixels.
+
+faz o validmap com os pixels da esfera que pertencem à seção.
+
+interpola a imagem planar pra formar a seção esférica
 
 \section{Ponderação dos mapas de profundidade de cada seção}
 
+Temos várias seções esféricas com overlap, sabemos que nos overlaps queremos que os valores sejam iguais. Para cada overlap, geramos pesos linha a linha para ponderar os valores de profundidade. (Equação do sistema). A solução do sistema se dá por SVD (citar?), mas podemos variar as ponderações das equações entre pesos ou entre profundidades.
+
+Foi feita uma segunda formulação com um peso por pixel, mas a complexidade polinomial da solução por SVD tornou a solução imprática para imagens de tamanho real. É possível fazer um \textit{downscaling} e ter um peso a cada x pixels, mas ainda assim fica com muitos artefatos...
+
+Cada seção da esfera tem duas regiões de overlap, que geram pesos diferentes em cada parte da imagem. É feita uma interpolação destes pesos à medida que se encontra a metade da seção esférica. Cada seção gera tem então mapas de disparidades mais coerentes entre si.
+
 \section{Reconstrução do mapa de profundidade completo}
 
+Ainda há diferença entre os mapas, então região de overlap tem que ser blended. Fizemos um alpha blending simples baseado na proximidade do pixel de cada projeção, para gerar um mapa de profundidade suave. Gera alguns artefatos na borda das regiões de overlap, onde não tem blending.
+
+
 \chapter{Resultados}
+\section{Visualização?}
+
 
 \section{Escolha das imagens a testar}
+Vistas sintéticas com o ground truth, etc. etc.
 
-\section{}
+\section{Parâmetros dos testes qualitativos}
 Classroom mapas x ground truth x rede direto na equiretangular.
-
-Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref{tbl:ex1}.
 
 \begin{table}[h]
     \caption{Tabela com métricas dos resultados}
@@ -320,8 +350,8 @@ Tabelas são construídas com praticamente os mesmos comandos. Ver a tabela \ref
 \end{table}
 
 
-\chapter{Conclusão}
-
+\chapter{Conclusões}
+Funcionou até, pode melhorar...
 
 \bibliographystyle{abntex2-alf}
 \bibliography{biblio}
