@@ -6,11 +6,12 @@
 % public domain.
 %
 \documentclass[cic,tc]{iiufrgs}
+\usepackage{tikz}
 \usepackage{tikz-3dplot}
 \usetikzlibrary{calc,arrows.meta,positioning,backgrounds}
-\begin{document}
-\tdplotsetmaincoords{-60}{-35}
 \usepackage{gensymb}
+\tdplotsetmaincoords{-60}{-35}
+
 % Para usar o modelo, deve-se informar o programa e o tipo de documento.
 % Programas :
 % * cic       -- Graduação em Ciência da Computação
@@ -166,11 +167,15 @@
 % introducao
 \chapter{Introdução}
 
-Este trabalho introduz um método para a estimativa de profundidade a partir de uma única imagem omnidirecional. Iniciaremos introduzindo os conceitos básicos sobre imagens omnidirecionais e estimativa de profundidade. As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz da cena 3D é projetada para um plano 2D através da projeção perspectiva. Imagens planares são capturadas através de câmeras, que tem um funcionamento parecido com o olho humano, e possuem um campo de visão limitado, normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens.
+Este trabalho introduz um método para a estimativa de profundidade a partir de uma única imagem omnidirecional. Iniciaremos introduzindo os conceitos básicos sobre imagens omnidirecionais e estimativa de profundidade.
 
-%https://tex.stackexchange.com/q/96074/
+As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras, que tem um funcionamento parecido com o olho humano, e possuem um campo de visão limitado, normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos.
 
-\begin{tikzpicture}
+\begin{figure}
+    \caption{Projeção perspectiva}
+    \begin{center}
+    \resizebox {10em} {!} {
+	\begin{tikzpicture}
   [
     tdplot_main_coords,
     >=Stealth,
@@ -206,14 +211,19 @@ Este trabalho introduz um método para a estimativa de profundidade a partir de 
   \draw [my red] (o) -- (d1.center);
   \scoped[on background layer]{\draw [my red] (d1.center) -- (d2.center);}
   \path [description] (0,4,0) [out=-95, in=95] to (-.75,4,.25) node {ponto\\principal} (0,6.5,0) [out=-95, in=95] to (-.75,6.5,.25) node {eixo\\\'otico};
-\end{tikzpicture}
+		\end{tikzpicture}
+	}
+    \end{center}
+    \label{fig:perspectiveProj}
+    \legend{Fonte: https://tex.stackexchange.com/q/96074/}
+\end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas, então são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho é utilizada a projeção equiretangular. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm},
+Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizonatal são projetados em W pixels e os 180\degree de campo de visão vertical em H pixels.
 
 \begin{figure}
     \caption{Imagem omnidirecional em projeção equiretangular}
     \begin{center}
-        \includegraphics[width=10em]{equiretangular.png}
+        \includegraphics[width=20em]{equiretangular.png}
     \end{center}
     \label{fig:sphericalIm}
     \legend{Fonte: Jianxiong Xiao, 3D Geometry for panorama}
