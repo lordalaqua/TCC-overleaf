@@ -169,12 +169,14 @@
 
 Este trabalho introduz um método para a estimativa de profundidade a partir de uma única imagem omnidirecional. Iniciaremos introduzindo os conceitos básicos sobre imagens omnidirecionais e estimativa de profundidade.
 
+\section{Imagens perspectivas e imagens omnidirecionais}
+
 As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras, que tem um funcionamento parecido com o olho humano, e possuem um campo de visão limitado, normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos.
 
 \begin{figure}
     \caption{Projeção perspectiva}
     \begin{center}
-    \resizebox {10em} {!} {
+    \resizebox {15em} {!} {
 	\begin{tikzpicture}
   [
     tdplot_main_coords,
@@ -218,7 +220,7 @@ As áreas de visão computacional e processamento de imagens, comumente trabalha
     \legend{Fonte: https://tex.stackexchange.com/q/96074/}
 \end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizonatal são projetados em W pixels e os 180\degree de campo de visão vertical em H pixels.
+Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em W pixels e os 180\degree de campo de visão vertical em H pixels.
 
 \begin{figure}
     \caption{Imagem omnidirecional em projeção equiretangular}
@@ -229,9 +231,11 @@ Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a 
     \legend{Fonte: Jianxiong Xiao, 3D Geometry for panorama}
 \end{figure}
 
-A estimativa de profundidade tem múltiplas aplicações em robótica, como navegação e reconhecimento de objetos, além de ser um componente essencial para a reconstrução 3D. No caso de imagens esféricas, a reconstrução 3D de uma imagen 360\degree tem aplicações diretas em realidade virtual e realidade aumentada.
+\section{Estimativa de profundidade}
 
-O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a informação de disparidade é calculada partir da correspondência entre pixels de um par de imagens obtidas de câmeras cujos parâmetros são conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas.
+A estimativa de profundidade consiste em, através da informação de cor de uma ou mais imagens, estimar a profundidade de cada pixel no espaço tridimensional. Há múltiplas aplicações em robótica, como navegação e reconhecimento de objetos, além de ser um componente essencial para a reconstrução 3D. No caso de imagens esféricas, a reconstrução 3D de uma imagen 360\degree tem aplicações diretas em realidade virtual e realidade aumentada.
+
+O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a partir de um par de imagens, a profundidade é estimada utilizando a correspondência entre pixels das duas imagens. Para tanto, é preciso utilizar câmeras cujos parâmetros sejam conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas.
 
 O método proposto neste trabalho pretende estender as técnicas de estimação de profundidade a partir de uma única imagem perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si. Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
@@ -272,9 +276,13 @@ O método proposto neste trabalho pretende estender qualquer técnica de estimat
     \legend{Fonte: O Autor}
 \end{figure}
 
-Inicialmente, a imagem esférica na projeção equiretangular é dividida em várias seções com sobreposição, e estas seções são projetadas para imagens planares. A estimativa de profundidade é realizada nestas projeções planares, e podem ser utilizadas quaisquer técnicas diferentes de estimativa de profundidade a partir de uma única imagem para isso, o método é genérico em relação à técnica. As profundidades estimadas são projetadas de volta para o domínio esférico, formando um conjunto de imagens equiretangulares onde temos apenas uma seção da profundidade da esfera. As técnicas utilizadas para estimativa de profundidade, no entanto, não impõem coerência entre as profundidades estimadas em cada seção da esfera, então é feita uma ponderação das profundidades geradas em cada seção, a fim de aprimorar a coerência global entre as estimativas de cada seção. Por fim, o método minimiza a diferença entre as profundidades de cada seção, mas há casos onde a diferença é diferente de zero, então é feito um \textit{blending} entre as profundidades estimadas para cada seção a fim de gerar um mapa de profundidades suave. Cada etapa será descrita em mais detalhe nas seções a seguir.
+Inicialmente, a imagem esférica na projeção equiretangular é dividida em várias seções com sobreposição, e estas são projetadas para imagens planares. A estimativa de profundidade é realizada nestas projeções planares, e podem ser utilizadas quaisquer técnicas diferentes de estimativa de profundidade a partir de uma única imagem para isso, o método é genérico em relação à técnica. As profundidades estimadas são projetadas de volta para o domínio esférico, formando um conjunto de imagens equiretangulares onde temos apenas uma parte da profundidade da esfera. As técnicas utilizadas para estimativa de profundidade, no entanto, não impõem coerência entre as profundidades estimadas em cada seção da esfera, então é feita uma ponderação das profundidades geradas em cada seção, a fim de aprimorar a coerência global entre as estimativas de cada seção. Por fim, o método minimiza a diferença entre as profundidades de cada seção, mas ainda há casos onde a diferença é diferente de zero, então é feito um \textit{blending} entre as profundidades estimadas para cada seção a fim de gerar um mapa de profundidades suave. Cada etapa será descrita em detalhes nas seções a seguir.
 
-\section{Projeção da esfera para o plano}
+\section{Projeção das seções para o plano}
+
+TODO: explicar porque não usamos os polos
+
+Esfera seccionada em N planos, com overlap porque precisamos de informação redundante para gerar a coerência global.
 
 \section{Estimativa de profundidade}
 
