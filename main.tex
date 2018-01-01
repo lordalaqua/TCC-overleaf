@@ -264,12 +264,39 @@ O método proposto neste trabalho pretende estender qualquer técnica de estimat
 \begin{figure}
     \caption{Etapas do \textit{pipeline}}
     \begin{center}
-        \begin{picture}(100,100)
-            \put(0,0){\line(0,1){20}}
-            \put(0,0){\line(1,0){20}}
-            \put(20,20){\line(0,-1){20}}
-            \put(20,20){\line(-1,0){20}}
-            \put(10,10){Pipeline}
+        \begin{picture}(450,100)
+            \put(0,20){\line(0,1){50}}
+            \put(0,20){\line(1,0){90}}
+            \put(90,70){\line(0,-1){50}}
+            \put(90,70){\line(-1,0){90}}
+            \put(90,45){\vector(1,0){10}}
+            \put(10,50){Seccionamento}
+            \put(20,40){e projeção}
+            \put(100,20){\line(0,1){50}}
+            \put(100,20){\line(1,0){90}}
+            \put(190,70){\line(0,-1){50}}
+            \put(190,70){\line(-1,0){90}}
+            \put(190,45){\vector(1,0){10}}
+            \put(120,50){Estimativa}
+            \put(108,40){de profundidade}
+            \put(200,20){\line(0,1){50}}
+            \put(200,20){\line(1,0){70}}
+            \put(270,70){\line(0,-1){50}}
+            \put(270,70){\line(-1,0){70}}
+            \put(270,45){\vector(1,0){10}}
+            \put(210,50){Reprojeção}
+            \put(210,40){para esfera}
+            \put(280,20){\line(0,1){50}}
+            \put(280,20){\line(1,0){70}}
+            \put(350,70){\line(0,-1){50}}
+            \put(350,70){\line(-1,0){70}}
+            \put(350,45){\vector(1,0){10}}
+            \put(290,42.5){Ponderação}
+            \put(360,20){\line(0,1){50}}
+            \put(360,20){\line(1,0){80}}
+            \put(440,70){\line(0,-1){50}}
+            \put(440,70){\line(-1,0){80}}
+            \put(366,42.5){Reconstrução}
         \end{picture}
     \end{center}
     \label{fig:pipeline}
@@ -278,7 +305,7 @@ O método proposto neste trabalho pretende estender qualquer técnica de estimat
 
 Inicialmente, a imagem esférica na projeção equiretangular é dividida em várias seções com sobreposição, e estas são projetadas para imagens planares. A estimativa de profundidade é realizada nestas projeções planares, e podem ser utilizadas quaisquer técnicas diferentes de estimativa de profundidade a partir de uma única imagem para isso, o método é genérico em relação à técnica. As profundidades estimadas são projetadas de volta para o domínio esférico, formando um conjunto de imagens equiretangulares onde temos apenas uma parte da profundidade da esfera. As técnicas utilizadas para estimativa de profundidade, no entanto, não impõem coerência entre as profundidades estimadas em cada seção da esfera, então é feita uma ponderação das profundidades geradas em cada seção, a fim de aprimorar a coerência global entre as estimativas de cada seção. Por fim, o método minimiza a diferença entre as profundidades de cada seção, mas ainda há casos onde a diferença é diferente de zero, então é feito um \textit{blending} entre as profundidades estimadas para cada seção a fim de gerar um mapa de profundidades suave. Cada etapa será descrita em detalhes nas seções a seguir.
 
-\section{Projeção das seções para o plano}
+\section{Seccionamento e projeção para oplano}
 
 TODO: explicar porque não usamos os polos
 
