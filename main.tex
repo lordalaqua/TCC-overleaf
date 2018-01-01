@@ -44,7 +44,7 @@
 % \usepackage{mathptmx}       % p/ usar fonte Adobe Times nas fórmulas
 
 \usepackage[alf,abnt-emphasize=bf]{abntex2cite}	% pacote para usar citações abnt
-
+\usepackage{todonotes}
 %
 % Informações gerais
 %
@@ -169,7 +169,7 @@
 
 \section{Motivação}
 
-A estimativa de profundidade é um componente crucial no entendimento da geometria tridimensional de uma cena
+A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para estimativa de profundidade é o\textit{stereo matching}, que utiliza informação de correspondência de um par de imagens da mesma cena para estimar a profundidade de cada ponto.  Há diversos métodos desenvolvidas para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
 
 \section{Objetivos}
 
@@ -179,7 +179,7 @@ A estimativa de profundidade é um componente crucial no entendimento da geometr
 
 \section{Imagens perspectivas e imagens omnidirecionais}
 
-As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras, que tem um funcionamento parecido com o olho humano, e possuem um campo de visão limitado, normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos.
+As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras que tem um funcionamento parecido com o olho humano, logo possuem um campo de visão limitado em $\phi$ graus. normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos.
 
 \begin{figure}
     \caption{Projeção perspectiva}
@@ -256,6 +256,7 @@ O método proposto neste trabalho pretende estender as técnicas de estimação 
 Sun360
 
 \section{Stereo matching em imagens omnidirecionais}
+\textit{Stereo matching} tem uma história, existem extensas taxonomias das técnicas existentes, desde \citet{stereoSurvey2001} que definiu a taxonomia, até \citet{stereoSurvey2016} que faz uma \textit{survey} das técnicas de \textit{stereo} e também das próprias \textit{surveys} anteriores.
 Stereo matching pode ser usado para imagens omnidirecionais, já usam em colagens (citar \citep{Li2001})
 
 \section{Estimativa de profundidade a partir de uma única imagem}
