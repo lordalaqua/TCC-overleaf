@@ -225,7 +225,8 @@ As áreas de visão computacional e processamento de imagens, comumente trabalha
 	}
     \end{center}
     \label{fig:perspectiveProj}
-    \legend{Fonte: La https://tex.stackexchange.com/q/96074/}
+    \legend{Fonte: \LaTeX Stack Exchange
+    (https://tex.stackexchange.com/q/96074/)}
 \end{figure}
 
 Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.
@@ -251,18 +252,30 @@ O método proposto neste trabalho pretende estender as técnicas de estimação 
 \chapter{Trabalhos anteriores}
 
 \section{Estimativa de profundidade}
-\citet{Lai1992}, \citet{Saxena2005}, \citet{Saxena2008}, \citet{Liu2010}
 
-\citet{Fayao2015}, \citet{Fayao2016}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Godard2016}, \citet{Kuznietsov2017}
-
-\citet{Zhou2017}
 
 \subsection{\textit{Stereo Matching}}
-taxonomias das técnicas existentes, desde \citet{stereoSurvey2001} que definiu a taxonomia, até \citet{stereoSurvey2016} que faz uma \textit{survey} das técnicas de \textit{stereo} e também das próprias \textit{surveys} anteriores.
-Stereo matching pode ser usado para imagens omnidirecionais, já usam em colagens (citar \citep{Li2001})
+Stereo taxonomies: \citet{stereoSurvey2001},  \citet{stereoSurvey2016}
+
+Multiview stereo: \citet{multiViewStereo2015}
+
+
+
+(citar \citep{Li2001})
 
 \subsection{Single image}
-Técnicas de estimativa de profundidade a partir de uma única imagem já eram pesquisadas desde os anos 90 (citar), mas a partir do uso de redes neurais que os resultados ficaram interessantes
+Depth from focus/defocus: \citet{Pentland1987}, \citet{Lai1992}, ainda há pesquisa na área \citet{Wei2015}
+
+Supervised learning, markov random field: \citet{Saxena2005}, \citet{Saxena2008}
+
+Semantic labels: \citet{Liu2010}
+
+With sparse depth samples: \citet{Ma2017}
+
+Neural networks: 
+\citet{Fayao2015}, \citet{Fayao2016}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Kuznietsov2017}
+
+Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
 
 \section{Imagens omnidirecionais}
 Sun360
@@ -336,6 +349,8 @@ interpola a imagem esférica porque os pixels não são inteiros.
 \section{Estimativa de profundidade}
 
 O método é independente da técnica de estimativa de profundidade utilizada, só é necessário que seja uma técnica de estimativa a partir de uma única imagem. Os resultados com redes neurais são impressionantes, escolhemos a rede do Fayao por ter código disponível. Utilizamos as redes como um \textit{blackbox}.
+
+Código usado foi de \citet{Fayao2016}.
 
 \section{Projetando a seção de volta para a esfera}
 

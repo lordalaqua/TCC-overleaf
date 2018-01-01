@@ -1,14 +1,6 @@
 % This file was created with JabRef 2.9.2.
 % Encoding: UTF8
 
-@InProceedings{Fayao2015,
-author = {Liu, Fayao and Shen, Chunhua and Lin, Guosheng},
-title = {Deep Convolutional Neural Fields for Depth Estimation From a Single Image},
-booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-month = {June},
-year = {2015}
-}
-
 @article{Godard2016,
   author    = {Cl{\'{e}}ment Godard and
                Oisin {Mac Aodha} and
@@ -58,18 +50,22 @@ year = {2015}
   bibsource = {dblp computer science bibliography, http://dblp.org}
 }
 
-@ARTICLE{Fayao2016, 
-author={F. Liu and C. Shen and G. Lin and I. Reid}, 
-journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
-title={Learning Depth from Single Monocular Images Using Deep Convolutional Neural Fields}, 
-year={2016}, 
-volume={38}, 
-number={10}, 
-pages={2024-2039}, 
-keywords={learning (artificial intelligence);neural nets;stereo image processing;CRF learning problem;closed-form solutions;continuous CRF;continuous conditional random field learning problem;deep CNN capacity;deep convolutional neural field model;deep structured learning scheme;depth estimation problem;hand-crafted features;inference problem;learning depth;log-likelihood maximization;outdoor scene datasets;partition function;patch-wise convolutions;single monocular images;stereo depth perception;superpixel pooling method;unified deep CNN framework;Approximation methods;Estimation;Labeling;Neural networks;Optimization;Semantics;Training;Depth estimation;conditional random field (CRF);deep convolutional neural networks (CNN);fully convolutional networks;superpixel pooling}, 
-doi={10.1109/TPAMI.2015.2505283}, 
-ISSN={0162-8828}, 
-month={Oct},}
+@InProceedings{Fayao2015,
+author = {Liu, Fayao and Shen, Chunhua and Lin, Guosheng},
+title = {Deep Convolutional Neural Fields for Depth Estimation From a Single Image},
+booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2015}
+}
+
+@inproceedings{Fayao2016,
+    author = {Fayao Liu and Chunhua Shen and Guosheng Lin},
+    title  = {Deep Convolutional Neural Fields for Depth Estimation from a Single Image},
+    booktitle= {Proc. IEEE Conf. Computer Vision and Pattern Recognition},
+    year   = {2015},
+    url    = {http://arxiv.org/abs/1411.6387},
+    pages  = {},
+}
 
 @InProceedings{Eigen2015,
 author = {Eigen, David and Fergus, Rob},
@@ -92,6 +88,22 @@ year = {2015}
  acmid = {2969091},
  publisher = {MIT Press},
  address = {Cambridge, MA, USA},
+}
+
+@article{Ma2017,
+  author    = {Fangchang Ma and
+               Sertac Karaman},
+  title     = {Sparse-to-Dense: Depth Prediction from Sparse Depth Samples and a
+               Single Image},
+  journal   = {CoRR},
+  volume    = {abs/1709.07492},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1709.07492},
+  archivePrefix = {arXiv},
+  eprint    = {1709.07492},
+  timestamp = {Thu, 05 Oct 2017 09:43:07 +0200},
+  biburl    = {http://dblp.org/rec/bib/journals/corr/abs-1709-07492},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
 }
 
 @inproceedings{Saxena2005,
@@ -121,7 +133,6 @@ day="01",
 volume="76",
 number="1",
 pages="53--69",
-abstract="We consider the task of 3-d depth estimation from a single still image. We take a supervised learning approach to this problem, in which we begin by collecting a training set of monocular images (of unstructured indoor and outdoor environments which include forests, sidewalks, trees, buildings, etc.) and their corresponding ground-truth depthmaps. Then, we apply supervised learning to predict the value of the depthmap as a function of the image. Depth estimation is a challenging problem, since local features alone are insufficient to estimate depth at a point, and one needs to consider the global context of the image. Our model uses a hierarchical, multiscale Markov Random Field (MRF) that incorporates multiscale local- and global-image features, and models the depths and the relation between depths at different points in the image. We show that, even on unstructured scenes, our algorithm is frequently able to recover fairly accurate depthmaps. We further propose a model that incorporates both monocular cues and stereo (triangulation) cues, to obtain significantly more accurate depth estimates than is possible using either monocular or stereo cues alone.",
 issn="1573-1405",
 doi="10.1007/s11263-007-0071-y",
 url="https://doi.org/10.1007/s11263-007-0071-y"
@@ -140,6 +151,18 @@ doi={10.1109/CVPR.2010.5539823},
 ISSN={1063-6919}, 
 month={June},}
 
+@INPROCEEDINGS{Wei2015, 
+author={Y. Wei and C. Wu}, 
+booktitle={2015 IEEE International Conference on Cyber Technology in Automation, Control, and Intelligent Systems (CYBER)}, 
+title={Fast depth reconstruction with a defocus model on micro scale}, 
+year={2015}, 
+volume={}, 
+number={}, 
+pages={947-952}, 
+keywords={atomic force microscopy;curve fitting;diffusion;image restoration;image sensors;light diffraction;AFM cantilevers;blurring;curve fitting;defocus imaging model;defocus model;fast depth reconstruction;heat diffusion;numerical model;optical diffraction;single vision sensor;Cameras;Image reconstruction;Mathematical model;Numerical models;Optical diffraction;Optical imaging;3D reconstruction;Defocus model;optical diffraction}, 
+doi={10.1109/CYBER.2015.7288072}, 
+ISSN={}, 
+month={June},}
 
 @ARTICLE{Lai1992, 
 author={Shang-Hong Lai and Chang-Wu Fu and Shyang Chang}, 
@@ -153,6 +176,19 @@ keywords={computer vision;optimisation;parameter estimation;computer vision;defo
 doi={10.1109/34.126803}, 
 ISSN={0162-8828}, 
 month={Apr},}
+
+@ARTICLE{Pentland1987, 
+author={A. P. Pentland}, 
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+title={A New Sense for Depth of Field}, 
+year={1987}, 
+volume={PAMI-9}, 
+number={4}, 
+pages={523-531}, 
+keywords={Biological systems;Biomedical optical imaging;Brightness;Focusing;Humans;Information resources;Lenses;Motion measurement;Optical sensors;Retina;Focus;human vision;image understanding;range sensing;shape-from-focus}, 
+doi={10.1109/TPAMI.1987.4767940}, 
+ISSN={0162-8828}, 
+month={July},}
 
 @INPROCEEDINGS{stereoSurvey2016, 
 author={Rostam Affendi Hamzah and Haidi Ibrahim}, 
@@ -173,9 +209,21 @@ booktitle={Proceedings IEEE Workshop on Stereo and Multi-Baseline Vision (SMBV 2
 title={A taxonomy and evaluation of dense two-frame stereo correspondence algorithms}, 
 year={2001},
 pages={131-140}, 
-abstract={Summary form only given. Strong light-matter coupling has been recently successfully explored in the GHz and THz [1] range with on-chip platforms. New and intriguing quantum optical phenomena have been predicted in the ultrastrong coupling regime [2], when the coupling strength Ω becomes comparable to the unperturbed frequency of the system ω. We recently proposed a new experimental platform where we couple the inter-Landau level transition of an high-mobility 2DEG to the highly subwavelength photonic mode of an LC meta-atom [3] showing very large Ω/ωc = 0.87. Our system benefits from the collective enhancement of the light-matter coupling which comes from the scaling of the coupling Ω ∝ √n, were n is the number of optically active electrons. In our previous experiments [3] and in literature [4] this number varies from 104-103 electrons per meta-atom. We now engineer a new cavity, resonant at 290 GHz, with an extremely reduced effective mode surface Seff = 4 × 10-14 m2 (FE simulations, CST), yielding large field enhancements above 1500 and allowing to enter the few (<;100) electron regime. It consist of a complementary metasurface with two very sharp metallic tips separated by a 60 nm gap (Fig.1(a, b)) on top of a single triangular quantum well. THz-TDS transmission experiments as a function of the applied magnetic field reveal strong anticrossing of the cavity mode with linear cyclotron dispersion. Measurements for arrays of only 12 cavities are reported in Fig.1(c). On the top horizontal axis we report the number of electrons occupying the topmost Landau level as a function of the magnetic field. At the anticrossing field of B=0.73 T we measure approximately 60 electrons ultra strongly coupled (Ω/ω- ||}, 
 keywords={image matching;software performance evaluation;stereo image processing;C++ implementation;computer vision;multiframe stereo data sets;performance;stereo correspondence;stereo matching;Bismuth;Taxonomy}, 
 doi={10.1109/SMBV.2001.988771}
+}
+
+@article{multiViewStereo2015,
+url = {http://dx.doi.org/10.1561/0600000052},
+year = {2015},
+volume = {9},
+journal = {Foundations and Trends® in Computer Graphics and Vision},
+title = {Multi-View Stereo: A Tutorial},
+doi = {10.1561/0600000052},
+issn = {1572-2740},
+number = {1-2},
+pages = {1-148},
+author = {Yasutaka Furukawa and Carlos Hernández}
 }
 
 @INPROCEEDINGS{Li2001,
