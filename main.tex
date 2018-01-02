@@ -169,7 +169,7 @@
 
 \section{Motivação}
 
-A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para estimativa de profundidade é o\textit{stereo matching}, que utiliza informação de correspondência de um par de imagens da mesma cena para estimar a profundidade de cada ponto.  Há diversos métodos desenvolvidas para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
+A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para estimativa de profundidade é o \textit{stereo matching}, que utiliza informação de correspondência de um par de imagens da mesma cena para estimar a profundidade de cada ponto.  Há diversos métodos desenvolvidos para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
 
 \section{Objetivos}
 
@@ -231,14 +231,12 @@ As áreas de visão computacional e processamento de imagens, comumente trabalha
 
 Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}
 
-Imagens omnidirecionais podem ser obtidas
-By using a single camera and a special lens or some
-kind of a mirror (conical, spherical, hyperboloidal,
-paraboloidal, etc.) [7, 8]. Through the mirror a single
-image can view the entire scene, or at least a very
-large field of view. By using multiple cameras, or one rotating camera,
-and stitching their images into a single panorama (also
-called “mosaicing”) [6, 12, 9].
+Imagens omnidirecionais podem ser obtidas de múltiplas maneiras, entre elas:
+\begin{itemize}
+\item Uma única câmera e lentes ou espelhos especias (cônicos, esféricos, hiperbólicos, etc.). As lentes ou espelhos permitem que a câmera possa capturar toda a cena, ou pelo menos aumentem seu campo de visão. Exemplos são descritos em \citet{omniSingleCam1997} e \citet{omniSingleCam1998}.
+\item Utilizando múltiplas imagens perspectivas, obtidas por múltiplas câmeras, ou por uma câmera sendo rotacionada, ou vídeo, e colando as imagens em uma única imagem panorâmica. Conhecido também como mosaico, há exemplos em \citet{omniMultiCam1994}, \citet{omniMultiCam1996} e \citet{omniMultiCam1997}).
+\item Obter diretamente um par estéreo de imagens omnidirecionais, mesmo de uma única câmera, como descrito em \citet{omniStereoCam1999}, \citep{omniStereoCam2013} e \citet{omniStereoCam2016}.
+\end{itemize}
 
 
 \begin{figure}
@@ -274,7 +272,7 @@ Photometric: \citet{photometricStereo1989}, \citet{photometricStereo2012}
 
 \subsection{Única imagem}
 
-Supervised learning, markov random field: \citet{Saxena2005}, \citet{Saxena2008}
+Supervised learning: \citet{Saxena2005}, \citet{Saxena2008}
 
 Semantic labels: \citet{Liu2010}
 
@@ -288,6 +286,7 @@ Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
 
 \subsection{\textit{Stereo} omnidirecional}
 Multiview stereo omnidirecional: \citet{Li2001}
+
 Hardware especializado para stereo omnidirecional (robotics): \citet{gluckman1998}, \citet{Koyasu2001} (+atual): \citet{Lin2014}
 
 Single image depth with structured light: \citet{Orghidan2005}
@@ -297,7 +296,7 @@ Projeção da esfera para plano: \citet{sun360}
 
 Extensão de técnicas planares para 360: \citet{flat2sphere}
 
-3D reconstruction of spherical images: \citet{panoContext}
+3D reconstruction from spherical images: \citet{panoContext}
 
 \chapter{Descrição do método}
 
@@ -393,28 +392,30 @@ Cada seção da esfera tem duas regiões de overlap, que geram pesos diferentes 
 
 Ainda há diferença entre os mapas, então região de overlap tem que ser blended. Fizemos um alpha blending simples baseado na proximidade do pixel de cada projeção, para gerar um mapa de profundidade suave. Gera alguns artefatos na borda das regiões de overlap, onde não tem blending.
 
-\chapter{Implementação}
-
 \chapter{Resultados}
 
 \section{Visualização}
 
-\section{Dataset}
-Vistas sintéticas com o ground truth, etc. etc.
+\todo{Colocar alguns mapas gerados, talvez vistas da point cloud?}
 
-\section{Parâmetros dos testes qualitativos}
-Classroom mapas x ground truth x rede direto na equiretangular.
+\section{Dataset}
+\todo{Vistas sintéticas com o ground truth, perguntar p/ Thiago os detalhes da cena}
+\todo{Pegar um dataset do SUN360 para visualizar somente}
+
+\section{Métricas}
+
+Métricas do Eigen (\citep{Eigen2014}), seção 3.2, 
 
 \begin{table}[h]
     \caption{Tabela com métricas dos resultados}
     \centering
         \begin{tabular}{c|c|c|c|c|c}
           \hline
-          \textit{Imagem} & \textit{ground truth} & \textit{sections} & \textit{M. sections} &  \textit{sphere}  &   \textit{M. sphere} \\
+          \textit{Imagem} & \textit{Métrica 1 seções} & \textit{Métrica 1 CNN direto} &  & \textit{Métrica 2 seções} & \textit{Métrica 2 CNN direto} \\
           \hline
           \hline
           classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\
-          classroom000  &  0,2  &  0,2  &  0,2  &  0,2  \\
+          classroom001  &  0,2  &  0,2  &  0,2  &  0,2  \\
           \hline
         \end{tabular}
     \legend{Fonte: O Autor}
