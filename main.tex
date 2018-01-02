@@ -179,7 +179,7 @@ A estimativa de profundidade é um componente crucial para a compreensão da geo
 
 \section{Imagens perspectivas e imagens omnidirecionais}
 
-As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras que tem um funcionamento parecido com o olho humano, logo possuem um campo de visão limitado em $\phi$ graus. normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos. \todo{Referenciar variáveis da figura para explicar projeção perspectiva}
+As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras que tem um funcionamento parecido com o olho humano, logo possuem um campo de visão limitado em $\phi$ graus. normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos. \todo{Referenciar variáveis da figura para explicar projeção perspectiva mais formalmente}
 
 \begin{figure}
     \caption{Projeção perspectiva}
@@ -229,7 +229,10 @@ As áreas de visão computacional e processamento de imagens, comumente trabalha
     (https://tex.stackexchange.com/q/96074/)}
 \end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.
+Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}
+
+Citações:
+
 
 \begin{figure}
     \caption{Imagem omnidirecional em projeção equiretangular}
@@ -246,42 +249,48 @@ A estimativa de profundidade consiste em, através da informação de cor de uma
 
 O método clássico para estimativa de profundidade é o \textit{stereo matching}, onde a partir de um par de imagens, a profundidade é estimada utilizando a correspondência entre pixels das duas imagens. Para tanto, é preciso utilizar câmeras cujos parâmetros sejam conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas.
 
-O método proposto neste trabalho pretende estender as técnicas de estimação de profundidade a partir de uma única imagem perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si. Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
+O método proposto neste trabalho pretende estender as técnicas de estimativa de profundidade a partir de uma única imagem perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si. Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
 
 \chapter{Trabalhos anteriores}
 
 \section{Estimativa de profundidade}
 
+\subsection{Múltiplas imagens}
+Stereo: \citet{stereoSurvey2001},  \citet{stereoSurvey2016}
 
-\subsection{\textit{Stereo Matching}}
-Stereo taxonomies: \citet{stereoSurvey2001},  \citet{stereoSurvey2016}
+Multiview: \citet{multiViewStereo2015}
 
-Multiview stereo: \citet{multiViewStereo2015}
+Structure from motion: \citet{structMotion2016}
+Focus/defocus: \citet{defocus1987}, atual: \citet{defocus2015}
+Photometric: \citet{photometricStereo1989}, \citet{photometricStereo2012}
 
-Structure from motion: \citet{stereoTemporal2016}
-
-(citar \citep{Li2001})
-
-\subsection{Single image}
-Depth from focus/defocus: \citet{Pentland1987}, atual: \citet{Wei2015}
+\subsection{Única imagem}
 
 Supervised learning, markov random field: \citet{Saxena2005}, \citet{Saxena2008}
 
 Semantic labels: \citet{Liu2010}
 
-With sparse depth samples: \citet{Ma2017}
-
-Neural networks: 
-\citet{Fayao2015}, \citet{Fayao2016}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Kuznietsov2017}
+Convolutional Neural networks: 
+\citet{Fayao2015}, \citet{Fayao2016}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Kuznietsov2017}, \citet{Li2017}
 
 Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
 
 \section{Imagens omnidirecionais}
-Sun360
-Flat2sphere
+
+Multiview stereo omnidirecional: \citet{Li2001}
+Hardware especializado para stereo omnidirecional (robotics): \citet{gluckman1998}, \citet{Koyasu2001} (+atual): \citet{Lin2014}
+
+Single image depth with structured light: \citet{Orghidan2005}
+
+Projeção da esfera para plano: \citet{sun360}
+
+Extensão de técnicas planares para 360: \citet{flat2sphere}
+
+3D reconstruction of spherical images: \citet{panoContext}
 
 \chapter{Descrição do método}
+
 \section{Overview do pipeline}
 
 O método proposto neste trabalho pretende estender qualquer técnica de estimativa de profundidade de imagens planares para ser utilizada com imagens esféricas. O método consiste de múltiplas etapas sequenciais, que chamaremos de nosso \textit{pipeline}. A imagem original esférica, na projeção equiretangular passa pelas etapas de processamento descritas na \ref{fig:pipeline}.
