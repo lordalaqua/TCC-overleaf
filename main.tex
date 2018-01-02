@@ -177,7 +177,7 @@ A estimativa de profundidade é um componente crucial para a compreensão da geo
 
 \chapter{Conceitos}
 
-\section{Imagens perspectivas e imagens omnidirecionais}
+\section{Imagens perspectivas vs. omnidirecionais}
 
 As áreas de visão computacional e processamento de imagens, comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras que tem um funcionamento parecido com o olho humano, logo possuem um campo de visão limitado em $\phi$ graus. normalmente em até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos. \todo{Referenciar variáveis da figura para explicar projeção perspectiva mais formalmente}
 
@@ -229,9 +229,16 @@ As áreas de visão computacional e processamento de imagens, comumente trabalha
     (https://tex.stackexchange.com/q/96074/)}
 \end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras (citar panotools wiki), e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}
+Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a esfera de três dimensões para uma imagem em duas dimensões. Há as projeções cilíndricas, azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção,  como descrito na figura \ref{fig:sphericalIm}, os 360\degree do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}
 
-Citações:
+Imagens omnidirecionais podem ser obtidas
+By using a single camera and a special lens or some
+kind of a mirror (conical, spherical, hyperboloidal,
+paraboloidal, etc.) [7, 8]. Through the mirror a single
+image can view the entire scene, or at least a very
+large field of view. By using multiple cameras, or one rotating camera,
+and stitching their images into a single panorama (also
+called “mosaicing”) [6, 12, 9].
 
 
 \begin{figure}
@@ -276,13 +283,16 @@ Convolutional Neural networks:
 
 Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
 
+
 \section{Imagens omnidirecionais}
 
+\subsection{\textit{Stereo} omnidirecional}
 Multiview stereo omnidirecional: \citet{Li2001}
 Hardware especializado para stereo omnidirecional (robotics): \citet{gluckman1998}, \citet{Koyasu2001} (+atual): \citet{Lin2014}
 
 Single image depth with structured light: \citet{Orghidan2005}
 
+\subsection{Outros}
 Projeção da esfera para plano: \citet{sun360}
 
 Extensão de técnicas planares para 360: \citet{flat2sphere}
