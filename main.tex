@@ -152,6 +152,7 @@
 	\item[CCD] \textit{Charge-coupled device}
     \item[MRF] \textit{Markov Random Field}
     \item[CNN] \textit{Convolutional Neural Network}
+    \item[SVD] \textit{Singular Value Decomposition}
     \item[NCC] \textit{Normalized Cross Correlation}
 \end{listofabbrv}
 
@@ -255,14 +256,14 @@ Como explicado anteriormente, câmeras comuns possuem um limite de campo de vis�
 \end{figure}
 
 \section{Estimativa de profundidade}
-
+\todo{formalizar esta seção melhor}
 A estimativa de profundidade consiste em estimar a distância entre objetos contidos em uma ou mais imagens e uma câmera de referência. Há múltiplas aplicações em robótica, como navegação e reconhecimento de objetos, além de ser um componente essencial para a reconstrução 3D. No caso de imagens esféricas, a reconstrução 3D de uma imagem 360\degree tem aplicações diretas em realidade virtual e realidade aumentada.
 
 O método clássico para estimativa de profundidade é o casamento estéreo, onde a profundidade é estimada utilizando a correspondência entre pixels das duas imagens. Para tanto, é preciso utilizar uma configuração de câmera cujos parâmetros sejam conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas. 
 
 A estimativa de profundidade a partir de uma única imagem é um problema desafiador, pois não se tem as indicações de profundidade da visão binocular, e não é possível se basear apenas na informação local, é necessário levar em conta o contexto global da imagem.
 
--sun360O método proposto neste trabalho pretende estender as técnicas de estimativa de profundidade a partir de uma única imagem em perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si.\crj{Podes colocar uma imagem aqui para ilustrar.}
+O método proposto neste trabalho pretende estender as técnicas de estimativa de profundidade a partir de uma única imagem em perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si.\crj{Podes colocar uma imagem aqui para ilustrar.}
 Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
 
@@ -270,9 +271,9 @@ Para gerar uma mapa de profundidades suave são escolhidas seções com regiões
 
 \section{Estimativa de profundidade}
 
-Esta seção cita diversos métodos para estimativa de profundidade encontrados na literatura como referência, porém o foco deste trabalho são os métodos de estimativa de profundidade monocular, ou seja, com uma única imagem.
-
 \subsection{Única imagem}
+
+Este trabalho pretende estender técnicas de estimativa de profundidade a partir de uma única imagem para o domínio das imagens esféricas, nesta seção é feita uma visão geral dos métodos já propostos para tal.
 
 Sem as informações de profundidades fornecidas pela visão binocular, a estimativa de profundidade pode ser vista como um problema de aprendizado, como exemplificado por \citet{Saxena2005} e \citet{Saxena2008}, que abordaram o problema como um problema de aprendizado supervisionado, e através de campos aleatórios de Markov (\textit{Markov Random Fields}, ou MRF), treinados para reconhecer sinais monoculares de profundidade, como diferença de texturas, oclusão, tamanho dos objetos, etc. obtiveram mapas de profundidade razoavelmente corretos, porém dependentes de alinhamento horizontal.
 
@@ -280,19 +281,19 @@ O trabalho de \citet{Liu2010} realiza uma segmentação da imagem em classes sem
 
 Recentemente, métodos baseados em redes neurais convolucionais (CNNs) têm alcançado novas marcas em diversas aplicações de visão computacional, \citet{Eigen2014} descrevem um método baseado em duas redes profundas, que estimam profundidades globais, para então refinar estas em uma maior resolução, o que foi estendido para incorporar outras informações da geometria tridimensional da cena \citep{Eigen2015}, os vetores normais das superfícies e categorias semânticas, e obteve resultados no estado da arte. \citet{Fayao2015} propuseram uma alternativa que combina campos aleatórios com redes neurais profundas em o que eles chamam de campos neurais convolucionais profundos (Deep convolutional neural fields).
 
-Visto o sucesso dos métodos de aprendizado supervisionados, e visto a dificuldade de obtenção de grandes quantidades de imagens com dados reais de profundidade para treinamento, já foram propostos métodos utilizando aprendizado não-supervisionado, ou semi-supervisionado. Entre eles 
-, , \citet{Kuznietsov2017}, \citet{Li2017}
-
-Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
+Visto o sucesso dos métodos de aprendizado supervisionados, e visto a dificuldade de obtenção de grandes quantidades de imagens com dados reais de profundidade para treinamento, já foram propostos métodos utilizando aprendizado não-supervisionado, ou semi-supervisionado. Entre eles \citet{Kuznietsov2017} que propuseram um método semi-supervisionado que utiliza mapas de profundidade reais esparsos para o treinamento, utilizando redes neurais para produzir os mapas densos. \citet{Godard2016} exploram o uso de pares estéreo para o treinamento ao invés de dados reais de profundidade, e \citet{Zhou2017} que utiliza redes neurais para estimativa de profundidade e pose de câmera, atrelando as duas utilizando a síntese de vistas como objetivo de treinamento. Estes métodos produzem resultados comparáveis ou superiores ao estado da arte em estimativa de profundidade com métodos de aprendizado supervisonado.
 
 \subsection{Múltiplas imagens}
 
-Casamento estéreo é um problema que já foi extensivamente abordado, há múltiplas revisões da literatura, desde \citet{stereoSurvey2001}, que propuseram uma taxonomia dos algoritmos de estéreo, métricas de avaliação, e uma base de dados para teste, até mais recentemente \citet{stereoSurvey2016}, que na sua revisão avalia dezenas de algoritmos, e propõe uma taxonomia das etapas dos algoritmos de estéreo, e faz uma análise das diversas revisões da literatura já feitas.
+Além das técnicas com uma única imagem, a estimativa de profundidade a partir de múltiplas imagens, especificamente o
+casamento estéreo, é um problema que já foi extensivamente abordado. Há múltiplas revisões da literatura, desde \citet{stereoSurvey2001}, que propuseram uma taxonomia dos algoritmos de estéreo, métricas de avaliação, e uma base de dados para teste, até mais recentemente \citet{stereoSurvey2016}, que na sua revisão avalia dezenas de algoritmos, e propõe uma taxonomia das etapas dos algoritmos de estéreo, e faz uma análise das diversas revisões da literatura já feitas.
 
 Além do casamento de pares estéreo tradicional, mais focados na reconstrução 3D das cenas, há variações utilizando mais de duas imagens \citep{multiViewStereo2015}, ou estimando a profundidade a partir de correspondências entre imagens obtidas de uma câmera em movimento (\textit{structure from motion}) \citep{structMotion2016}. Há também métodos que estimam a profundidade sem variar a orientação da câmera, mas sim a iluminação da cena \citep{photometricStereo1989}, \citep{photometricStereo2012}, ou os parâmetros da câmera, tipicamente o foco \citep{defocus1987}, \citep{defocus2015}.
 
 
 \section{Imagens omnidirecionais}
+
+\todo{Escrever}
 
 \subsection{Casamento estéreo omnidirecional}
 Multiview stereo omnidirecional: \citet{Li2001}
@@ -315,7 +316,7 @@ Extensão de técnicas planares para 360: \citet{flat2sphere}
 O método proposto neste trabalho pretende estender qualquer técnica de estimativa de profundidade de imagens planares para ser utilizada com imagens esféricas. O método consiste de múltiplas etapas sequenciais, que chamaremos de nosso \textit{pipeline}. A imagem original esférica, na projeção equiretangular passa pelas etapas de processamento descritas na Figura~\ref{fig:pipeline}.
 
 \begin{figure}
-    \caption{Etapas do \textit{pipeline}}
+    \caption{Etapas do \textit{pipeline}\todo{Fazer figura com exemplos de imagens intermediárias}}
     \begin{center}
         \begin{picture}(450,100)
             \put(0,20){\line(0,1){50}}
@@ -396,17 +397,25 @@ Temos várias seções esféricas com overlap, sabemos que nos overlaps queremos
 
 Minimizar diferença entre profundidades estimadas:
 
-Sejam $I(x,y)$ uma imagem esférica, $D_L(x,y)$ e $D_R(x,y)$ estimativas de profundidade de duas seções de $I$, $P$ o conjunto dos pixels e $L$ o conjunto das linhas da região de sobreposição entre estas duas seções de $I$, queremos calcular pesos $w_{kL}$ e $w_{kR}$ para cada linha $k$, tal que $ k \in L$ para ponderar as linhas destas seções de $I$. Para isso, queremos escolher pesos que
-$$ W_D = \sum_{(i,j) \in P}(w_{iL}D_L(i,j)-w_{iR}D_R(i,j)) $$
+Sejam $I(x,y)$ uma imagem esférica $S_L$ e $S_R$ duas seções da esfera $I$, $D_L(x,y)$ e $D_R(x,y)$ estimativas de profundidade de $S_L$ e $S_R$, $P$ o conjunto dos pixels e $L$ o conjunto das linhas da região de sobreposição entre $S_L$ e $S_R$. Queremos calcular pesos $w_{kL}$ e $w_{kR}$ para cada linha $k$, tal que $ k \in L$ para ponderar as linhas de $S_L$ e $S_R$. Para isso, queremos escolher pesos que minimizem a diferença entre as estimativas de profundidade em cada pixel onde há sobreposição, ou seja, minimizar o somatório:
+$$ W_D =\sum_{(i,j) \in P}(w_{iL}D_L(i,j)-w_{iR}D_R(i,j)) $$
+No entanto, isto pode gerar pesos muito diferentes entre linhas adjacentes nas imagens, gerando descontinuidades no mapa de profundidade, logo é interessante adicionar o seguinte termo ao problema de minimizaçao para manter a coerência entre linhas adjacentes:
+
 $$ W_C = \sum_{(i,j) \in P}T(i,j)((w_{iL}-w_{i+1L})+(w_{iR}-w_{i+1R}))$$
+\begin{center}
+onde
+\end{center}
 $$T(i,j) = \begin{cases}
   \alpha, $ se $ |I(i,j)-I(i+1,j)| < \gamma \\
   \beta, $ se $  |I(i,j)-I(i+1,j)| \geq \gamma  \\
 \end{cases}$$
 
-(Equação do sistema). A solução do sistema se dá por SVD (citar?), mas podemos variar as ponderações das equações entre pesos ou entre profundidades.
+$\alpha$, $\beta$ e $\gamma$ são constantes, $\alpha$ é um fator de escala para linhas com cor similar, e $\beta$ o fato para linhas com cor não similar. $\gamma$ define um limite da diferença entre dois pixels que define sua similaridade na equação. 
+Os pesos são calculados minimizando a soma de $W_D$ e $W_C$, pela decomposição em valores singulares (\textit{Singular Value Decomposition}, ou SVD) da equação na forma matricial:
 
-Cada seção da esfera tem duas regiões de overlap, que geram pesos diferentes em cada parte da imagem. É feita uma interpolação destes pesos à medida que se encontra a metade da seção esférica. Cada seção gera tem então mapas de disparidades mais coerentes entre si.
+\todo{forma matricial}
+
+Cada seção da esfera tem duas regiões de overlap, que geram pesos diferentes em cada parte da imagem. É feita uma interpolação destes pesos à medida que se encontra a metade da seção esférica. Cada seção fica então com mapas de disparidades com menos diferenças entre si.
 
 \section{Reconstrução do mapa de profundidade completo}
 
