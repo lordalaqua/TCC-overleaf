@@ -168,7 +168,9 @@
 
 \section{Motivação}
 
-A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para obtenção de mapas de profundidade é o casamento estéreo, que utiliza as correspondências entre um par de imagens para estimar a profundidade em uma cena. Recentemente, no entanto, há diversos resultados promissores na obtenção de mapas de profundidade a partir de uma única imagem utilizando redes neurais convolucionais \citep{Eigen2014}, \citep{Fayao2015}. 
+A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. Imagens omnidirecionais, ou esféricas, possuem um campo de visão de 360\degree e oferecem informação contextual muito maior sobre a cena em relação à imagens planares comuns, logo, a estimativa de profundidade nestas imagens pode ser de utilidade para uma gama de aplicações, desde compreensão de cenas, detecção de objetos, navegação, reconstrução 3D, realidade virtual e realidade aumentada.
+
+O método tradicional para obtenção de mapas de profundidade é o casamento estéreo, que utiliza as correspondências entre um par de imagens para estimar a profundidade em uma cena, mas requer mútliplas imagens e/ou configurações de câmeras especializadas. Há diversos resultados promissores na obtenção de mapas de profundidade a partir de uma única imagem, como os trabalhos de  \citet{Eigen2015} e \citet{Fayao2015} (Figura \ref{fig:monoDepth}), que utilizam redes neurais convolucionais. Estas redes, no entanto, são treinadas a partir de imagens planares que possuem valores de profundidades conhecidos.
 
 \begin{figure}
     \caption{Estimativa de profundidade monocular}
@@ -179,17 +181,30 @@ A estimativa de profundidade é um componente crucial para a compreensão da geo
     \legend{Fonte: \citep{Eigen2015}, modificado}
 \end{figure}
 
-Há diversos métodos desenvolvidos para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
+Na medida em que a utilização de câmeras omnidirecionais se popularizam em aplicações como realidade virtual e aumentada, robótica, etc. seria proveitoso utilizar estes métodos de estimativa a partir de imagens monoculares para obter mapas de profundidade a partir de uma única imagem esférica. Contudo, são escassas as bases de dados de imagens esféricas com valores de profundidades conhecidos que se assemelhem às utilizadas para o treinamento das redes com imagens planares, logo seria interessante um método que utilize as redes já treinadas para imagens planares para utilização com imagens esféricas.
 
-\section{Objetivos}
+\section{Objetivo}
+
+O objetivo do trabalho é desenvolver e testar um método que utilize as técnicas de estimativa de profundidade monocular em imagens planares já existentes para obter mapas de profundidade a partir de imagens esféricas.
 
 \section{Estrutura}
 
+O trabalho é estruturado da seguinte forma:
+
+\begin{itemize}
+\item \textbf{Conceitos:} Apresentar os principais conceitos abordados, de modo a contextualizar a discussão posterior do desenvolvimento do método.
+\item \textbf{Trabalho anterior:} Relacionar a pesquisa já realizada tanto em estimativa de profundidade quanto com imagens omnidirecionais, e contextualizar o método proposto.
+\item \textbf{O método proposto:} Descrever o método desenvolvido, suas etapas e funcionamento.
+\item \textbf{Resultados:} Avaliação do método e apresentação de resultados qualitativos, quantitativos e visualizações dos mapas de profundidade obtidos.
+\item \textbf{Conclusão:} Discutir o desempenho do método e possibilidades de trabalho futuro.
+\end{itemize}
+
 \chapter{Conceitos}
 
-\section{Imagens em perspectivas vs. omnidirecionais}
+\section{Imagens em perspectiva vs. omnidirecionais}
 
-As áreas de visão computacional e processamento de imagens comumente trabalham com imagens planares, onde a luz de uma cena em três dimensões é projetada para um plano de duas dimensões através da projeção perspectiva. Imagens planares são capturadas através de câmeras que tem um funcionamento parecido com o olho humano, logo possuem um campo de visão limitado em $\phi$ graus. Normalmente, esse ângulo se estende até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. 
+Uma câmera comum mapeia o espaço tridimensional para um plano através da projeção perspectiva. Possue um campo de visão limitado em $\phi$ graus. 
+\citep{Szeliski} Normalmente, esse ângulo se estende até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. 
 A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos. \todo{Referenciar variáveis da figura para explicar projeção perspectiva mais formalmente}
 
 \begin{figure}
@@ -270,7 +285,7 @@ O método proposto neste trabalho pretende estender as técnicas de estimativa d
 Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
 
-\chapter{Trabalhos anteriores}
+\chapter{Trabalho anterior}
 \crj{Acho que podes deixar a estrutura atual, mas deixar claro que o foco é no estéreo com uma única imagem.}
 
 \section{Estimativa de profundidade}
