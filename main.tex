@@ -449,7 +449,7 @@ $$NCC(f,g) = \frac{1}{n \sigma_f \sigma_g}\sum_{x=0}^{n}(f(x)-\bar{f})(g(x)-\bar
 A métrica varia entre $[-1,1]$, sendo -1 a diferença máxima entre as imagens e 1 a diferença mínima.
 
 \begin{table}[h]
-    \caption{Tabela com métricas dos resultados}
+    \caption{Tabela com métricas dos resultados FOV 90\degree}
     \centering
         \begin{tabular}{c|c|c|c}
           \hline
@@ -488,6 +488,53 @@ A métrica varia entre $[-1,1]$, sendo -1 a diferença máxima entre as imagens 
           \hline
           \hline
           Média        & 0.23753 & -0.15505 & 0.39258 \\
+          \hline
+        \end{tabular}
+    \legend{Fonte: O Autor}
+    \label{tbl:results1}
+\end{table}
+
+\begin{table}[h]
+    \caption{Tabela com métricas dos resultados FOV 120\degree}
+    \centering
+        \begin{tabular}{c|c|c|c}
+          \hline
+          \textit{Imagem} & \textit{NCC seções} & \textit{NCC CNN} & \textit{Diferença} \\
+          \hline
+          \hline
+          classroom000 & -0.17032 & -0.21705 & 0.04673 \\
+          classroom001 & 0.42219 & -0.10831 & 0.53051 \\
+          classroom002 & 0.31102 & -0.20685 & 0.51787 \\
+          classroom003 & 0.35680 & -0.15697 & 0.51377 \\
+          classroom004 & 0.20508 & -0.23831 & 0.44338 \\
+          classroom005 & 0.34369 & -0.18891 & 0.53260 \\
+          classroom006 & 0.19693 & -0.05349 & 0.25042 \\
+          classroom007 & 0.47997 & -0.15913 & 0.63910 \\
+          classroom008 & 0.27671 & -0.22065 & 0.49736 \\
+          classroom009 & 0.44129 & -0.05070 & 0.49200 \\
+          classroom010 & 0.33796 & -0.10223 & 0.44019 \\
+          classroom011 & -0.01260 & -0.19751 & 0.18491 \\
+          classroom012 & 0.41223 & -0.18498 & 0.59721 \\
+          classroom013 & 0.12704 & -0.14514 & 0.27218 \\
+          classroom014 & 0.30762 & -0.25593 & 0.56355 \\
+          classroom075 & 0.32709 & -0.23729 & 0.56438 \\
+          classroom085 & 0.32512 & -0.24758 & 0.57270 \\
+          classroom095 & 0.31677 & -0.22659 & 0.54336 \\
+          classroom105 & 0.33640 & -0.21739 & 0.55379 \\
+          classroom115 & 0.34648 & -0.22978 & 0.57626 \\
+          classroom125 & 0.36710 & -0.23235 & 0.59945 \\
+          classroom135 & 0.36841 & -0.22080 & 0.58921 \\
+          classroom145 & 0.35844 & -0.24526 & 0.60370 \\
+          classroom150 & 0.33417 & -0.21547 & 0.54964 \\
+          classroom155 & 0.33783 & -0.22376 & 0.56159 \\
+          classroom165 & 0.37149 & -0.21825 & 0.58974 \\
+          classroom175 & 0.37054 & -0.20718 & 0.57773 \\
+          classroom185 & 0.37027 & -0.21435 & 0.58462 \\
+          classroom195 & 0.39620 & -0.23381 & 0.63001 \\
+          \hline
+          \hline
+			mean & 0.30903 & -0.19504 & 0.50407 \\
+
           \hline
         \end{tabular}
     \legend{Fonte: O Autor}
