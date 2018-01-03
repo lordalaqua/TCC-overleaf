@@ -229,7 +229,7 @@ A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \te
     (https://tex.stackexchange.com/q/96074/)}
 \end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a \crj{superfície da esfera de raio unitário, com duas dimensões, para um domínio planar.}. Há as projeções cilíndricas e azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção, como descrito na figura \ref{fig:sphericalIm}, os 360\degree  do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}. \crj{`Seria bom colocar as equações de mapemanento.}
+Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a superfície da esfera de raio unitário, com duas dimensões, para um domínio planar. Há as projeções cilíndricas e azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção, como descrito na figura \ref{fig:sphericalIm}, os 360\degree  do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}. \crj{`Seria bom colocar as equações de mapemanento.}
 
 Imagens omnidirecionais podem ser obtidas de múltiplas maneiras, entre elas:
 \begin{itemize}
@@ -389,11 +389,9 @@ Temos várias seções esféricas com overlap, sabemos que nos overlaps queremos
 
 Minimizar diferença entre profundidades estimadas:
 
-Considere uma imagem esférica $I(x,y)$, e as estimativas de profundidade de duas seções com sobreposição $D_L(x,y)$ e $D_R(x,y)$, e seja $P$ o conjunto dos pixels e $L$ o conjunto das linhas da região de sobreposição entre as duas seções. Queremos calcular pesos $w_{kL}$ e $w_{kR}$ para cada linha $k$, tal que $ k \in L$ para ponderar as linhas de $D_L(x,y)$ e $D_R(x,y)$. 
+Sejam $I(x,y)$ uma imagem esférica, $D_L(x,y)$ e $D_R(x,y)$ estimativas de profundidade de duas seções de $I$, $P$ o conjunto dos pixels e $L$ o conjunto das linhas da região de sobreposição entre estas duas seções de $I$, queremos calcular pesos $w_{kL}$ e $w_{kR}$ para cada linha $k$, tal que $ k \in L$ para ponderar as linhas destas seções de $I$. Para isso, queremos escolher pesos que
 $$ W_D = \sum_{(i,j) \in P}(w_{iL}D_L(i,j)-w_{iR}D_R(i,j)) $$
-
 $$ W_C = \sum_{(i,j) \in P}T(i,j)((w_{iL}-w_{i+1L})+(w_{iR}-w_{i+1R}))$$
-onde
 $$T(i,j) = \begin{cases}
   \alpha, $ se $ |I(i,j)-I(i+1,j)| < \gamma \\
   \beta, $ se $  |I(i,j)-I(i+1,j)| \geq \gamma  \\
