@@ -266,8 +266,7 @@ A estimativa de profundidade a partir de uma única imagem é um problema desafi
 Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
 
-\chapter{Trabalho anterior}
-\crj{Acho que podes deixar a estrutura atual, mas deixar claro que o foco é no estéreo com uma única imagem.}
+\chapter{Trabalhos anteriores}
 
 \section{Estimativa de profundidade}
 
@@ -280,6 +279,8 @@ Sem as informações de profundidades fornecidas pela visão binocular, a estima
 O trabalho de \citet{Liu2010} realiza uma segmentação da imagem em classes semânticas para utilizar informação contextual e conhecimento prévio (ex: o céu está normalmente longe da câmera) para estimar as profundidades.
 
 Recentemente, métodos baseados em redes neurais convolucionais (CNNs) têm alcançado novas marcas em diversas aplicações de visão computacional, \citet{Eigen2014} descrevem um método baseado em duas redes profundas, que estimam profundidades globais, para então refinar estas em uma maior resolução, o que foi estendido para incorporar outras informações da geometria tridimensional da cena \citep{Eigen2015}, os vetores normais das superfícies e categorias semânticas, e obteve resultados no estado da arte. \citet{Fayao2015} propuseram uma alternativa que combina campos aleatórios com redes neurais profundas em o que eles chamam de campos neurais convolucionais profundos (Deep convolutional neural fields).
+
+Visto o sucesso dos métodos de aprendizado supervisionados, e visto a dificuldade de obtenção de grandes quantidades de imagens com dados reais de profundidade para treinamento, já foram propostos métodos utilizando aprendizado não-supervisionado, ou semi-supervisionado. Entre eles 
 , , \citet{Kuznietsov2017}, \citet{Li2017}
 
 Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
