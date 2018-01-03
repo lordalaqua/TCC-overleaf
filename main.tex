@@ -6,6 +6,7 @@
 % public domain.
 %
 \def\crj#1{\textcolor{red}{(#1)}}
+\def\todo#1{\textcolor{orange}{(#1)}}
 \documentclass[cic,tc]{iiufrgs}
 \usepackage{tikz}
 \usepackage{tikz-3dplot}
@@ -46,7 +47,6 @@
 % \usepackage{mathptmx}       % p/ usar fonte Adobe Times nas fórmulas
 
 \usepackage[alf,abnt-emphasize=bf]{abntex2cite}	% pacote para usar citações abnt
-\usepackage{todonotes}
 %
 % Informações gerais
 %
@@ -153,11 +153,11 @@
     \item[NCC] \textit{Normalized Cross Correlation}
 \end{listofabbrv}
 
-% idem para a lista de símbolos
-\begin{listofsymbols}{$\alpha\beta\pi\omega$}
-    \item[$\sum{\frac{a}{b}}$] Somatório do produtório
-    \item[$\alpha\beta\pi\omega$] Fator de inconstância do resultado
-\end{listofsymbols}
+% % idem para a lista de símbolos
+% \begin{listofsymbols}{$\alpha\beta\pi\omega$}
+%     \item[$\lambda$] Longitude
+%     \item[$\phi$] Latitude
+% \end{listofsymbols}
 
 % sumario
 \tableofcontents
@@ -172,7 +172,6 @@
 A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. Imagens omnidirecionais, ou esféricas, possuem um campo de visão de 360\degree e oferecem informação contextual muito maior sobre a cena em relação à imagens planares comuns, logo, a estimativa de profundidade nestas imagens pode ser de utilidade para uma gama de aplicações, desde compreensão de cenas, detecção de objetos, navegação, reconstrução 3D, realidade virtual e realidade aumentada.
 
 O método tradicional para obtenção de mapas de profundidade é o casamento estéreo, que utiliza as correspondências entre um par de imagens para estimar a profundidade em uma cena, mas requer mútliplas imagens e/ou configurações de câmeras especializadas. Há diversos resultados promissores na obtenção de mapas de profundidade a partir de uma única imagem, como os trabalhos de  \citet{Eigen2015} e \citet{Fayao2015} (Figura \ref{fig:monoDepth}), que utilizam redes neurais convolucionais. Estas redes, no entanto, são treinadas a partir de imagens planares que possuem valores de profundidades conhecidos.
-
 \begin{figure}
     \caption{Estimativa de profundidade monocular}
     \begin{center}
@@ -181,7 +180,6 @@ O método tradicional para obtenção de mapas de profundidade é o casamento es
     \label{fig:monoDepth}
     \legend{Fonte: \citep{Eigen2015}, modificado}
 \end{figure}
-
 Na medida em que a utilização de câmeras omnidirecionais se popularizam em aplicações como realidade virtual e aumentada, robótica, etc. seria proveitoso utilizar estes métodos de estimativa a partir de imagens monoculares para obter mapas de profundidade a partir de uma única imagem esférica. Contudo, são escassas as bases de dados de imagens esféricas com valores de profundidades conhecidos que se assemelhem às utilizadas para o treinamento das redes com imagens planares, logo seria interessante um método que utilize as redes já treinadas para imagens planares para utilização com imagens esféricas.
 
 \section{Objetivo}
@@ -209,7 +207,6 @@ Uma imagem é uma representação 2D do espaço tridimensional, capturada por um
 \subsection{Imagens planares}
 
 Uma câmera comum mapeia o espaço tridimensional para um plano através da projeção perspectiva. Como descrito em \citet{Szeliski}, um modelo simples para o funcionamento de uma câmera é o modelo de lentes finas. Como descrito na figura (\ref{fig:lens-fov}), o campo de visão de uma imagem obtida por uma câmera comum é o ângulo $f.o.v.$ e depende da relação entre o tamanho $W$ do sensor de imagem e da distância focal $f$ da lente. Exceto usando lentes especiais que distorcem a projeção perspectiva (e.g. \textit{fisheye}), o campo de visão será limitado em no máximo 180\degree .
-
 \begin{figure}
     \caption{Modelo de lentes finas}
     \begin{center}
@@ -218,16 +215,31 @@ Uma câmera comum mapeia o espaço tridimensional para um plano através da proj
     \label{fig:lens-fov}
     \legend{O campo de visão ($f.o.v.$) é dependente da proporção entre o tamanho do sensor $W$ e a distância focal $f$. Fonte: \citep{Szeliski}}
 \end{figure}
-
 \subsection{Imagens omnidirecionais}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, idealmente capturam a luz de todas as direções, e possuem um campo de visão de 360\degree. Como explicado na seção anterior, a projeção perspectiva é limitada ao  ao redor do ponto onde são capturadas, , logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a superfície da esfera de raio unitário, com duas dimensões, para um domínio planar. Há as projeções cilíndricas e azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção, como descrito na figura \ref{fig:sphericalIm}, os 360\degree  do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}. \crj{`Seria bom colocar as equações de mapemanento.}
+Imagens omnidirecionais, também conhecidas como imagens esféricas, idealmente capturam a luz de todas as direções, e possuem um campo de visão de 360\degree. Como explicado na seção anterior, a projeção perspectiva é limitada a 180\degree, então, para mapear todos os pontos da esfera de raio unitário, com duas dimensões, é necessário utilizar outras projeções. Há uma míriade de projeções para projetar mapas \citep{sphereProjections}, por exemplo, cilíndricas, cônicas e azimutais. Ao longo do trabalho será utilizada somente a projeção equiretangular.
 
-Imagens omnidirecionais podem ser obtidas de múltiplas maneiras, entre elas:
+\subsubsection{Projeção equiretangular}
+
+A projeção equiretangular é um caso específico da projeção cilíndrica equidistante. De acordo com \citet{equiretangularProjection}, as equações de mapeamento para latitude $\phi$ e longitude $\lambda$ na esfera para coordenadas horizontais $x$ e verticais $y$ na imagem se dão por:
+
+$$ x = (\lambda - \lambda_0)\cos{\phi_1} $$
+$$ y = (\phi - \phi_1)$$
+
+Sendo $\phi_1$ o ângulo dos paralelos ao norte e sul do equador da esfera onde a escala da projeção é exata, na projeção equiretangular é $\phi_1 = 0$, e $\lambda_0$ o meridiano central do mapa, que no caso de imagens podemos definir como zero, a projeção equiretangular é simplesmente uma conversão direta de longitude na esfera para coordenada horizontal na imagem e latitude na esfera para coordenada vertical na imagem. No entanto, ângulos são contínuos, a latitude varia de 0 a $2\pi$ radianos e a longitude de 0 a $\pi$ radianos, e as coordenadas de pixel são discretas e sua variação depende da resolução da imagem, então, dada uma imagem com $W$ pixels na horizontal e $H$ pixels na vertical como na figura \ref{fig:sphericalIm}, temos as seguintes relações:
+
+$$ \frac{x}{W} = \frac{\lambda}{2\pi}, \hspace{1em} e \hspace{1em}  \frac{y}{H} = \frac{\phi}{\pi}$$
+
+E a partir destas relações, para qualquer pixel na coordenada $x,y$ na imagem projetada, obtemos a latitude $\phi$ e longitude $\lambda$ na esfera por:
+
+$$ \lambda = \frac{2\pi x}{W}, \hspace{1em}  \phi = \frac{\pi y}{H}$$
+
+\subsubsection{Captura de imagens omnidirecionais}
+
+Como explicado anteriormente, câmeras comuns possuem um limite de campo de visão, e ainda não foi projetada uma câmera omnidirecional ideal, porém imagens omnidirecionais podem ser obtidas de múltiplas maneiras, utilizando uma ou mais câmeras comuns ou especializadas:
 \begin{itemize}
-\item Uma única câmera e lentes ou espelhos especias (cônicos, esféricos, hiperbólicos, etc.). As lentes ou espelhos permitem que a câmera possa capturar toda a cena, ou pelo menos aumentem seu campo de visão. Exemplos são descritos em \citet{omniSingleCam1997} e \citet{omniSingleCam1998}.
-\item Múltiplas imagens em perspectiva, obtidas por múltiplas câmeras ou por uma câmera em movimento, e colando as imagens em uma única imagem panorâmica. Conhecido também como mosaico, há exemplos em \citet{omniMultiCam1994}, \citet{omniMultiCam1996} e \citet{omniMultiCam1997}.
-\item Obter diretamente um par estéreo de imagens omnidirecionais, mesmo de uma única câmera, como descrito em \citet{omniStereoCam1999}, \citep{omniStereoCam2013} e \citet{omniStereoCam2016}. \crj{Lorenzo, esse bullet não seria pra 3d?}
+\item É possível alterar a projeção da imagem obtida por uma única câmera através de lentes ou espelhos especiais (cônicos, esféricos, hiperbólicos, etc.). As lentes ou espelhos permitem que a câmera possa capturar toda a cena, ou pelo menos aumentam seu campo de visão. Exemplos são descritos em \citet{omniSingleCam1997} e \citet{omniSingleCam1998}.
+\item Combinando informação obtida de múltiplas imagens em perspectiva, obtidas por múltiplas câmeras ou por uma câmera em movimento, e colando as imagens em uma única imagem panorâmica. Conhecido também como mosaico, há exemplos em \citet{omniMultiCam1994}, \citet{omniMultiCam1996} e \citet{omniMultiCam1997}.
 \end{itemize}
 
 
@@ -242,12 +254,11 @@ Imagens omnidirecionais podem ser obtidas de múltiplas maneiras, entre elas:
 
 \section{Estimativa de profundidade}
 
-A estimativa de profundidade consiste em estimar
-a distância entre objetos contidos em uma ou mais imagens e uma câmera de referência. Há múltiplas aplicações em robótica, como navegação e reconhecimento de objetos, além de ser um componente essencial para a reconstrução 3D. No caso de imagens esféricas, a reconstrução 3D de uma imagem 360\degree tem aplicações diretas em realidade virtual e realidade aumentada.
+A estimativa de profundidade consiste em estimar a distância entre objetos contidos em uma ou mais imagens e uma câmera de referência. Há múltiplas aplicações em robótica, como navegação e reconhecimento de objetos, além de ser um componente essencial para a reconstrução 3D. No caso de imagens esféricas, a reconstrução 3D de uma imagem 360\degree tem aplicações diretas em realidade virtual e realidade aumentada.
 
-O método clássico para estimativa de profundidade é o casamento estéreo, onde a profundidade é estimada utilizando a correspondência entre pixels das duas imagens. Para tanto, é preciso utilizar câmeras cujos parâmetros sejam conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas. 
+O método clássico para estimativa de profundidade é o casamento estéreo, onde a profundidade é estimada utilizando a correspondência entre pixels das duas imagens. Para tanto, é preciso utilizar uma configuração de câmera cujos parâmetros sejam conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas. 
 
-O método proposto neste trabalho pretende estender as técnicas de estimativa de profundidade a partir de uma única imagem em perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si.\crj{Podes colocar uma imagem aqui para ilustrar.}
+-sun360O método proposto neste trabalho pretende estender as técnicas de estimativa de profundidade a partir de uma única imagem em perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si.\crj{Podes colocar uma imagem aqui para ilustrar.}
 Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
 
@@ -256,14 +267,13 @@ Para gerar uma mapa de profundidades suave são escolhidas seções com regiões
 
 \section{Estimativa de profundidade}
 
+Esta seção cita diversos métodos para estimativa de profundidade encontrados na literatura como referência, porém o foco deste trabalho são os métodos de estimativa de profundidade monocular, ou seja, com uma única imagem.
+
 \subsection{Múltiplas imagens}
-Stereo: \citet{stereoSurvey2001},  \citet{stereoSurvey2016}
 
-Multiview: \citet{multiViewStereo2015}
+Casamento estéreo é um problema que já foi extensivamente abordado, há múltiplas revisões da literatura, desde \citet{stereoSurvey2001}, que propuseram uma taxonomia dos algoritmos de estéreo, métricas de avaliação, e uma base de dados para teste, até mais recentemente \citet{stereoSurvey2016}, que na sua revisão avalia dezenas de algoritmos, e propõe uma taxonomia das etapas dos algoritmos de estéreo, e faz uma análise das diversas revisões da literatura já feitas.
 
-Structure from motion: \citet{structMotion2016}
-Focus/defocus: \citet{defocus1987}, atual: \citet{defocus2015}
-Photometric: \citet{photometricStereo1989}, \citet{photometricStereo2012}
+Além do casamento de pares estéreo tradicional, mais focados na reconstrução 3D das cenas, há variações utilizando mais de duas imagens \citep{multiViewStereo2015}, ou estimando a profundidade a partir de correspondências entre imagens obtidas de uma câmera em movimento (\textit{structure from motion}) \citep{structMotion2016}. Há também métodos que estimam a profundidade sem variar a orientação da câmera, mas sim a iluminação da cena \citep{photometricStereo1989}, \citep{photometricStereo2012}, ou os parâmetros da câmera, tipicamente o foco \citep{defocus1987}, \citep{defocus2015}.
 
 \subsection{Única imagem}
 
@@ -416,8 +426,9 @@ A métrica varia entre $[-1,1]$, sendo -1 a diferença máxima entre as imagens 
 
 \begin{table}[h]
     \caption{Tabela com métricas dos resultados FOV 90\degree}
+    \vspace{0.5em}
     \centering
-        \begin{tabular}{c|c|c|c}
+        \begin{tabular}{|c|c|c|c|}
           \hline
           \textit{Imagem} & \textit{NCC seções} & \textit{NCC CNN} & \textit{Diferença} \\
           \hline
@@ -456,14 +467,16 @@ A métrica varia entre $[-1,1]$, sendo -1 a diferença máxima entre as imagens 
           mean & 0.27257 & -0.22401 & 0.49658 \\
           \hline
         \end{tabular}
+    \vspace{0.5em}
     \legend{Fonte: O Autor}
     \label{tbl:results1}
 \end{table}
 
 \begin{table}[h]
     \caption{Tabela com métricas dos resultados FOV 120\degree}
+    \vspace{0.5em}
     \centering
-        \begin{tabular}{c|c|c|c}
+        \begin{tabular}{|c|c|c|c|}
           \hline
           \textit{Imagem} & \textit{NCC seções} & \textit{NCC CNN} & \textit{Diferença} \\
           \hline
@@ -502,6 +515,7 @@ A métrica varia entre $[-1,1]$, sendo -1 a diferença máxima entre as imagens 
 		  mean & 0.30903 & -0.19504 & 0.50407 \\
           \hline
         \end{tabular}
+    \vspace{0.5em}
     \legend{Fonte: O Autor}
     \label{tbl:results1}
 \end{table}
