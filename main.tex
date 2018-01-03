@@ -168,7 +168,18 @@
 
 \section{Motivação}
 
-A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para obtenção de mapas de profundidade é o casamento estéreo, que utiliza as correspondências entre um par de imagens para estimar a profundidade em uma cena. Recentemente, no entanto, há diversos resultados promissores na obtenção de mapas de profundidade a partir de uma única imagem utilizando redes neurais convolucionais \citep{Eigen2014}, \citep{Fayao2015}.   Há diversos métodos desenvolvidos para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
+A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para obtenção de mapas de profundidade é o casamento estéreo, que utiliza as correspondências entre um par de imagens para estimar a profundidade em uma cena. Recentemente, no entanto, há diversos resultados promissores na obtenção de mapas de profundidade a partir de uma única imagem utilizando redes neurais convolucionais \citep{Eigen2014}, \citep{Fayao2015}. 
+
+\begin{figure}
+    \caption{Estimativa de profundidade monocular}
+    \begin{center}
+        \includegraphics[width=30em]{monocular-depth.jpg}
+    \end{center}
+    \label{fig:monoDepth}
+    \legend{Fonte: \citep{Eigen2015}, modificado}
+\end{figure}
+
+Há diversos métodos desenvolvidos para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
 
 \section{Objetivos}
 
