@@ -50,17 +50,17 @@
 %
 % Informações gerais
 %
-\title{Estimativa de profundidade a partir de uma única imagem omnidirecional}
+\title{Estimativa de profundidade monocular a partir de imagens omnidirecionais}
 
 \author{Dal'Aqua}{Lorenzo Pezzi}
 
 % orientador e co-orientador são opcionais (não diga isso pra eles :))
-\advisor[Prof.~Dr.]{Jung}{Claudio}
+\advisor[Prof.~Dr.]{Jung}{Claudio Rosito}
 % \coadvisor[Prof.~Dr.]{Knuth}{Donald Ervin}
 
 % a data deve ser a da defesa; se nao especificada, são gerados
 % mes e ano correntes
-\date{11 de Janeiro}{2018}
+\date{Janeiro}{11, 2018}
 
 % o local de realização do trabalho pode ser especificado (ex. para TCs)
 % com o comando \location:
@@ -136,7 +136,7 @@
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
-\begin{englishabstract}{Depth estimation on a single omnidirectional image}{Keywords, in, English}
+\begin{englishabstract}{Monocular Depth estimation on omnidirectional images}{Keywords, in, English}
     Abstract in english
 \end{englishabstract}
 
@@ -168,7 +168,7 @@
 
 \section{Motivação}
 
-A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para estimativa de profundidade é o casamento estéreo, que utiliza informação de correspondência de um par de imagens da mesma cena para estimar a profundidade de cada ponto.  Há diversos métodos desenvolvidos para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
+A estimativa de profundidade é um componente crucial para a compreensão da geometria tridimensional de uma cena. O método tradicional para obtenção de mapas de profundidade é o casamento estéreo, que utiliza as correspondências entre um par de imagens para estimar a profundidade em uma cena. Recentemente, no entanto, há diversos resultados promissores na obtenção de mapas de profundidade a partir de uma única imagem utilizando redes neurais convolucionais \citep{Eigen2014}, \citep{Fayao2015}.   Há diversos métodos desenvolvidos para essa tarefa em imagens planares \todo{citação?}, porém é uma área relativamente pouco explorada quando se tratam de imagens omnidirecionais. Imagens omnidirecionais possuem um campo de visão de 360\degree, representam toda a esfera ao redor do ponto onde foram obtidas.
 
 \section{Objetivos}
 
@@ -280,7 +280,7 @@ Supervised learning: \citet{Saxena2005}, \citet{Saxena2008}
 Semantic labels: \citet{Liu2010}
 
 Convolutional Neural networks: 
-\citet{Fayao2015}, \citet{Fayao2016}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Kuznietsov2017}, \citet{Li2017}
+\citet{Fayao2015}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Kuznietsov2017}, \citet{Li2017}
 
 Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
 
@@ -353,7 +353,7 @@ Inicialmente, a imagem esférica na projeção equiretangular é dividida em vá
 
 \section{Seccionamento e projeção para o plano}
 
-Esfera seccionada em $N$ planos, com sobreposição porque precisamos de informação redundante para gerar a coerência global. Cada plano com FOV de 90\degree, e 45\degree de diferença entre as seções, logo há 45\degree de overlap.
+Esfera seccionada em $N$ planos, com sobreposição porque precisamos de informação redundante para gerar a coerência global. Cada plano com FOV de $\theta$, e $\theta/2$ de diferença entre as seções, logo há 45\degree de overlap.
 
 A projeção é calculada utilizando a distância focal conhecida $2\pi W$ (Figura \ref{fig:sphericalIm})
 
@@ -371,7 +371,7 @@ interpola a imagem esférica porque os pixels não são inteiros.
 
 O método é independente da técnica de estimativa de profundidade utilizada, só é necessário que seja uma técnica de estimativa a partir de uma única imagem. Os resultados com redes neurais são impressionantes, escolhemos a rede do Fayao por ter código disponível. Utilizamos as redes como um \textit{blackbox}.
 
-Código usado foi de \citet{Fayao2016}.
+Código usado foi de \citet{Fayao2015}.
 
 \section{Projetando a seção de volta para a esfera}
 
