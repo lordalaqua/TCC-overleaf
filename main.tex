@@ -149,6 +149,7 @@
 % lista de abreviaturas e siglas
 % o parametro deve ser a abreviatura mais longa
 \begin{listofabbrv}{NCC}
+	\item[CCD] \textit{Charge-coupled device}
     \item[NCC] \textit{Normalized Cross Correlation}
 \end{listofabbrv}
 
@@ -201,61 +202,26 @@ O trabalho é estruturado da seguinte forma:
 
 \chapter{Conceitos}
 
-\section{Imagens em perspectiva vs. omnidirecionais}
+\section{Imagens planares vs. omnidirecionais}
 
-Uma câmera comum mapeia o espaço tridimensional para um plano através da projeção perspectiva. Possue um campo de visão limitado em $\phi$ graus. 
-\citep{Szeliski} Normalmente, esse ângulo se estende até 180\degree, e quanto maior o campo de visão mais distorcidas são as imagens. 
-A projeção perspectiva projeta pontos do espaço \textit{3D} para um plano \textit{2D}, no caso de imagens digitais, em pontos discretos. \todo{Referenciar variáveis da figura para explicar projeção perspectiva mais formalmente}
+Uma imagem é uma representação 2D do espaço tridimensional, capturada por um meio sensível à luz, no caso de imagens digitais, sensores como CCD (\textit{Charge-coupled device}) \citep{Gonzalez}. Nesta seção detalharemos como são obtidas imagens planares, e como estas diferem das imagens omnidirecionais que são o foco deste trabalho.
+
+\subsection{Imagens planares}
+
+Uma câmera comum mapeia o espaço tridimensional para um plano através da projeção perspectiva. Como descrito em \citet{Szeliski}, um modelo simples para o funcionamento de uma câmera é o modelo de lentes finas. Como descrito na figura (\ref{fig:lens-fov}), o campo de visão de uma imagem obtida por uma câmera comum é o ângulo $f.o.v.$ e depende da relação entre o tamanho $W$ do sensor de imagem e da distância focal $f$ da lente. Exceto usando lentes especiais que distorcem a projeção perspectiva (e.g. \textit{fisheye}), o campo de visão será limitado em no máximo 180\degree .
 
 \begin{figure}
-    \caption{Projeção perspectiva}
+    \caption{Modelo de lentes finas}
     \begin{center}
-    \resizebox {15em} {!} {
-	\begin{tikzpicture}
-  [
-    tdplot_main_coords,
-    >=Stealth,
-    my dashed/.style={dashed, thick, ->, shorten >=-15pt, shorten <=-15pt, every node/.append style={font=\footnotesize}},
-    my box/.style={thin, gray!70},
-    my blue/.style={blue, line cap=round, -{Triangle[width=3*#1]}, line width=#1, shorten >=#1*1.75pt, every node/.append style={fill, circle, inner sep=0pt, minimum size=#1*3.5pt, anchor=center, outer sep=0pt}},
-    my label/.append style={midway, font=\scriptsize},
-    my vectors/.style={green!50!black, {Stealth[scale=.75]}-{Stealth[scale=.75]}},
-    my red/.style={thick, red, line cap=round},
-    my grey/.style={gray!70},
-    description/.style={draw=gray!70, thick, line cap=round, every node/.style={align=center, font=\scriptsize\sffamily, anchor=north}},
-  ]
-%   \draw [help lines] (-2,0,0) -- (2,0,0) node[anchor=north west]{$x$} (0,0,0) -- (0,7,0) node[anchor=north east]{$y$} (0,0,0) -- (0,0,2) node[anchor=north]{$z$} (-2,7,0) -- (2,7,0);
-  \draw [my grey] (0,4,0) -- (0,7,0) (-2,7,0) -- (2,7,0);
-  \coordinate (o) at (0,0,0);
-  \path [draw=gray!70, text=gray, fill=gray!20, opacity=0.8, text opacity=1] (-1.5,4,1.75) coordinate (a) -- ++(0,0,-3.5) coordinate (b) -- ++(3,0,0) coordinate (c) -- ++(0,0,3.5) coordinate (d) -- cycle node [pos=.95, above, sloped, anchor=south west] {$z=f$} ;
-%   \foreach \i in {a,b,c,d} \node [red, font=\scriptsize] at (\i) {\i};
-  \draw [my grey] (-2,0,0) -- (2,0,0) (0,0,0) -- (0,4,0) (0,0,0) -- (0,0,2);
-  \draw [thick, ->, every node/.style={font=\footnotesize, inner sep=0pt}] (o) node [anchor=north west] {$F_c$} (o) edge node [pos=1, anchor=north east] {$z_c$} ++(0,1,0) edge node [pos=1, anchor=north] {$y_c$} ++(0,0,1) -- ++(1,0,0) node [anchor=north west] {$x_c$};
-  \draw [my box] (o) ++(0,4,-.5) coordinate (p1) -- ++(1,0,0) coordinate (p2) -- ++(0,0,-1.25) coordinate (p3);
-  \foreach \i in {0,1,...,4} \draw [my box] (p1) ++(\i*.25,0,0) -- ++(0,0,-.25);
-  \foreach \i in {0,1,...,5} \draw [my box] (p2) ++(0,0,-\i*.25) -- ++(-.25,0,0);
-  \draw [my box] (p1) ++(0,0,-.25) -- ++(.75,0,0) -- ++(0,0,-1);
-  \draw [my dashed, cyan] ($(b)!1/2!(c)$) -- ($(d)!1/2!(a)$) node [below=15pt, anchor=north] {$y$};
-  \draw [my dashed, cyan] ($(b)!1/2!(a)$) -- ($(d)!1/2!(c)$) node [above right=17pt, anchor=north west] {$x$};
-  \draw [my dashed, green!50!black, <->] (a) node [below=15pt, anchor=north] {$v$} -- (b) -- (c) node [above right=17pt, anchor=north west] {$u$};
-  \path [green!50!black, every node/.style={font=\scriptsize, inner sep=0pt}] (p2) node [above right, anchor=south west] {$(u,v)$};
-  \path (p2) ++(-.125,0,0) coordinate (q2) ++(0,0,-.125) coordinate (r2);
-  \draw [my blue=1] ($(0,4,0)+($(q2)-(p1)$)$) coordinate (s2) -- (r2) node (d1) {};
-  \scoped[on background layer]{\draw [my blue=1.75] ($($1.75*($(s2)-(0,4,0)$)$)+(0,7,0)$) -- ++($1.75*($(r2)-(s2)$)$) node (d2) [label={[label distance=-20pt]above:{$P=(X,Y,Z)$}}] {};}
-  \draw [my vectors] (0,4,.1) -- ($(s2)+(0,0,.1)$) node [below, my label, sloped] {$\vec{u}$};
-  \draw [my vectors] (-.1,4,0) -- ($(q2)-(s2)+(-.1,4,0)$) node [left, my label] {$\vec{v}$};
-  \draw [my red] (o) -- (d1.center);
-  \scoped[on background layer]{\draw [my red] (d1.center) -- (d2.center);}
-  \path [description] (0,4,0) [out=-95, in=95] to (-.75,4,.25) node {ponto\\principal} (0,6.5,0) [out=-95, in=95] to (-.75,6.5,.25) node {eixo\\\'otico};
-\end{tikzpicture}
-	}
+        \includegraphics[width=30em]{lens-fov.png}
     \end{center}
-    \label{fig:perspectiveProj}
-    \legend{Fonte: \LaTeX Stack Exchange
-    (https://tex.stackexchange.com/q/96074/)}
+    \label{fig:lens-fov}
+    \legend{O campo de visão ($f.o.v.$) é dependente da proporção entre o tamanho do sensor $W$ e a distância focal $f$. Fonte: \citep{Szeliski}}
 \end{figure}
 
-Imagens omnidirecionais, também conhecidas como imagens esféricas, capturam a luz de todas as direções ao redor do ponto onde são capturadas, possuindo um campo de visão de 360\degree, logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a superfície da esfera de raio unitário, com duas dimensões, para um domínio planar. Há as projeções cilíndricas e azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção, como descrito na figura \ref{fig:sphericalIm}, os 360\degree  do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}. \crj{`Seria bom colocar as equações de mapemanento.}
+\subsection{Imagens omnidirecionais}
+
+Imagens omnidirecionais, também conhecidas como imagens esféricas, idealmente capturam a luz de todas as direções, e possuem um campo de visão de 360\degree. Como explicado na seção anterior, a projeção perspectiva é limitada ao  ao redor do ponto onde são capturadas, , logo as distorções que seriam introduzidas com a projeção perspectiva são muito mais significativas. Para trabalhar com imagens esféricas são utilizadas diferentes projeções para mapear a superfície da esfera de raio unitário, com duas dimensões, para um domínio planar. Há as projeções cilíndricas e azimutais, entre outras \todo{citar panotools wiki ou encontrar melhor}, e ao longo do trabalho será utilizada a projeção equiretangular somente. Nesta projeção, como descrito na figura \ref{fig:sphericalIm}, os 360\degree  do campo de visão horizontal são projetados em $W$ pixels e os 180\degree de campo de visão vertical em $H$ pixels.\todo{Formalizar melhor}. \crj{`Seria bom colocar as equações de mapemanento.}
 
 Imagens omnidirecionais podem ser obtidas de múltiplas maneiras, entre elas:
 \begin{itemize}
