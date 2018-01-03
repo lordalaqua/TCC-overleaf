@@ -150,6 +150,7 @@
 % o parametro deve ser a abreviatura mais longa
 \begin{listofabbrv}{NCC}
 	\item[CCD] \textit{Charge-coupled device}
+    \item[MRF] \textit{Markov Random Field}
     \item[NCC] \textit{Normalized Cross Correlation}
 \end{listofabbrv}
 
@@ -258,6 +259,8 @@ A estimativa de profundidade consiste em estimar a distância entre objetos cont
 
 O método clássico para estimativa de profundidade é o casamento estéreo, onde a profundidade é estimada utilizando a correspondência entre pixels das duas imagens. Para tanto, é preciso utilizar uma configuração de câmera cujos parâmetros sejam conhecidos. Recentemente, a aplicação de redes neurais convolucionais mostrou resultados impressionantes na estimativa de profundidade a partir de uma única imagem. No entanto, a utilização destes algoritmos com imagens 360\degree não produz a mesma qualidade de resultados, pois o treinamento destes é feito utilizando imagens perspectivas. 
 
+A estimativa de profundidade a partir de uma única imagem é um problema desafiador, pois não se tem as indicações de profundidade da visão binocular, e não é possível se basear apenas na informação local, é necessário levar em conta o contexto global da imagem.
+
 -sun360O método proposto neste trabalho pretende estender as técnicas de estimativa de profundidade a partir de uma única imagem em perspectiva para o domínio das imagens esféricas. Para tanto, são feitas projeções planares de seções da imagem esférica, e é estimada a profundidade de cada seção. As profundidades calculadas são projetadas de volta para o domínio esférico, porém as profundidades estimadas para cada seção não são coerentes entre si.\crj{Podes colocar uma imagem aqui para ilustrar.}
 Para gerar uma mapa de profundidades suave são escolhidas seções com regiões sobrepostas, então é feita uma minimização da diferença das profundidades nas regiões sobrepostas através da ponderação da profundidade de cada seção na imagem final.
 
@@ -277,7 +280,7 @@ Além do casamento de pares estéreo tradicional, mais focados na reconstrução
 
 \subsection{Única imagem}
 
-Supervised learning: \citet{Saxena2005}, \citet{Saxena2008}
+Sem as informações de profundidades fornecidas pela visão binocular, a estimativa de profundidade pode ser vista como um problema de aprendizado, como exemplificado por \citet{Saxena2005} e \citet{Saxena2008}, que abordaram o problema como um problema de aprendizado supervisionado, e através de campos aleatórios de Markov (\textit{Markov Random Fields}, ou MRF), obtiveram mapas de profundidade razoavelmente corretos.
 
 Semantic labels: \citet{Liu2010}
 
