@@ -151,6 +151,7 @@
 \begin{listofabbrv}{NCC}
 	\item[CCD] \textit{Charge-coupled device}
     \item[MRF] \textit{Markov Random Field}
+    \item[CNN] \textit{Convolutional Neural Network}
     \item[NCC] \textit{Normalized Cross Correlation}
 \end{listofabbrv}
 
@@ -272,22 +273,22 @@ Para gerar uma mapa de profundidades suave são escolhidas seções com regiões
 
 Esta seção cita diversos métodos para estimativa de profundidade encontrados na literatura como referência, porém o foco deste trabalho são os métodos de estimativa de profundidade monocular, ou seja, com uma única imagem.
 
+\subsection{Única imagem}
+
+Sem as informações de profundidades fornecidas pela visão binocular, a estimativa de profundidade pode ser vista como um problema de aprendizado, como exemplificado por \citet{Saxena2005} e \citet{Saxena2008}, que abordaram o problema como um problema de aprendizado supervisionado, e através de campos aleatórios de Markov (\textit{Markov Random Fields}, ou MRF), treinados para reconhecer sinais monoculares de profundidade, como diferença de texturas, oclusão, tamanho dos objetos, etc. obtiveram mapas de profundidade razoavelmente corretos, porém dependentes de alinhamento horizontal.
+
+O trabalho de \citet{Liu2010} realiza uma segmentação da imagem em classes semânticas para utilizar informação contextual e conhecimento prévio (ex: o céu está normalmente longe da câmera) para estimar as profundidades.
+
+Recentemente, métodos baseados em redes neurais convolucionais (CNNs) têm alcançado novas marcas em diversas aplicações de visão computacional, \citet{Eigen2014} descrevem um método baseado em duas redes profundas, que estimam profundidades globais, para então refinar estas em uma maior resolução, o que foi estendido para incorporar outras informações da geometria tridimensional da cena \citep{Eigen2015}, os vetores normais das superfícies e categorias semânticas, e obteve resultados no estado da arte. \citet{Fayao2015} propuseram uma alternativa que combina campos aleatórios com redes neurais profundas em o que eles chamam de campos neurais convolucionais profundos (Deep convolutional neural fields).
+, , \citet{Kuznietsov2017}, \citet{Li2017}
+
+Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
+
 \subsection{Múltiplas imagens}
 
 Casamento estéreo é um problema que já foi extensivamente abordado, há múltiplas revisões da literatura, desde \citet{stereoSurvey2001}, que propuseram uma taxonomia dos algoritmos de estéreo, métricas de avaliação, e uma base de dados para teste, até mais recentemente \citet{stereoSurvey2016}, que na sua revisão avalia dezenas de algoritmos, e propõe uma taxonomia das etapas dos algoritmos de estéreo, e faz uma análise das diversas revisões da literatura já feitas.
 
 Além do casamento de pares estéreo tradicional, mais focados na reconstrução 3D das cenas, há variações utilizando mais de duas imagens \citep{multiViewStereo2015}, ou estimando a profundidade a partir de correspondências entre imagens obtidas de uma câmera em movimento (\textit{structure from motion}) \citep{structMotion2016}. Há também métodos que estimam a profundidade sem variar a orientação da câmera, mas sim a iluminação da cena \citep{photometricStereo1989}, \citep{photometricStereo2012}, ou os parâmetros da câmera, tipicamente o foco \citep{defocus1987}, \citep{defocus2015}.
-
-\subsection{Única imagem}
-
-Sem as informações de profundidades fornecidas pela visão binocular, a estimativa de profundidade pode ser vista como um problema de aprendizado, como exemplificado por \citet{Saxena2005} e \citet{Saxena2008}, que abordaram o problema como um problema de aprendizado supervisionado, e através de campos aleatórios de Markov (\textit{Markov Random Fields}, ou MRF), obtiveram mapas de profundidade razoavelmente corretos.
-
-Semantic labels: \citet{Liu2010}
-
-Convolutional Neural networks: 
-\citet{Fayao2015}, \citet{Eigen2014}, \citet{Eigen2015}, \citet{Kuznietsov2017}, \citet{Li2017}
-
-Unsupervised: \citet{Godard2016}, \citet{Zhou2017}
 
 
 \section{Imagens omnidirecionais}
